@@ -22,31 +22,30 @@ function Home() {
             <Icon
               icon={'MaterialCommunityIcons/home-circle'}
               size={px2dp(40)}
-              color={'#aaa'}
             />
           }
           activeIcon={
             <Icon
               icon={'MaterialCommunityIcons/home-circle'}
               size={px2dp(40)}
-              color={'#fff'}
+              color={theme.baseColor}
             />
           }>
           <Assets />
         </TabView.Sheet>
         <TabView.Sheet
           title={'模块'}
-          icon={<Icon icon={'appstore1'} size={px2dp(40)} color={'#aaa'} />}
+          icon={<Icon icon={'appstore1'} size={px2dp(40)} />}
           activeIcon={
-            <Icon icon={'appstore1'} size={px2dp(40)} color={'#fff'} />
+            <Icon icon={'appstore1'} size={px2dp(40)} color={theme.baseColor} />
           }>
           {/*<Apps />*/}
         </TabView.Sheet>
         <TabView.Sheet
           title={'设置'}
-          icon={<Icon icon={'setting'} size={px2dp(40)} color={'#aaa'} />}
+          icon={<Icon icon={'setting'} size={px2dp(40)} />}
           activeIcon={
-            <Icon icon={'setting'} size={px2dp(40)} color={'#fff'} />
+            <Icon icon={'setting'} size={px2dp(40)} color={theme.baseColor} />
           }>
           {/*<Setting />*/}
         </TabView.Sheet>

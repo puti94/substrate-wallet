@@ -15,12 +15,12 @@ export const px2dp = px => {
 
 export const theme = {
   //主题颜色
-  baseColor: '#5851f6',
-  navigationColor: '#373737',
+  baseColor: '#3288bd',
+  navigationColor: '#fdfdfd',
   line: '#EAEAEA',
   backgroundColor: '#f9f9f9',
-  navigationTitle: '#FFFFFF',
-  navigationIcon: '#FFFFFF',
+  navigationTitle: '#343434',
+  navigationIcon: '#343434',
   borderColor: '#E6E6E6',
   title: '#2A2A2A',
   content: '#7A7A7A',
@@ -64,6 +64,5 @@ export const theme = {
   },
 };
 Theme.set({
-  tvBarBtnTitleColor: '#aaa',
-  tvBarBtnActiveTitleColor: '#fff',
+  tvBarBtnActiveTitleColor: theme.baseColor,
 });

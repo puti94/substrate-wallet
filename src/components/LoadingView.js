@@ -1,17 +1,19 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, ActivityIndicator} from 'react-native';
+import {theme} from '../config/theme';
 
-const LoadingView = () => {
+const LoadingView = ({title = i18n('Base.Loading')}) => {
   return (
     <View style={style.container}>
       <View style={style.loadingContainer}>
+        <ActivityIndicator size={px2dp(80)} color={theme.baseColor} />
         <Text
           style={{
             fontSize: 14,
-            color: '#707070',
+            color: theme.title,
             marginTop: px2dp(44),
           }}>
-          {i18n('Base.Loading')}
+          {title}
         </Text>
       </View>
     </View>
@@ -21,8 +23,7 @@ export default LoadingView;
 
 const style = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
     paddingBottom: px2dp(200),
   },
   loadingContainer: {

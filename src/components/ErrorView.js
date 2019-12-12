@@ -1,14 +1,17 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
 import {Button} from 'teaset';
+import Icon from './Icon';
+import {theme} from '../config/theme';
 
 function ErrorView({btnStyle, textStyle, errorText, btnTitle, onPress}) {
   return (
     <View style={styles.container}>
       <View style={styles.errorContainer}>
-        <Image
-          style={{height: px2dp(245), width: px2dp(245)}}
-          resizeMode={'contain'}
+        <Icon
+          color={theme.danger}
+          size={px2dp(120)}
+          icon={'MaterialIcons/error'}
         />
         <Text style={[styles.textStyle, textStyle]}>{errorText}</Text>
         {!!btnTitle && (
@@ -27,8 +30,7 @@ export default ErrorView;
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
   },
   btn_style: {
     marginTop: px2dp(117),

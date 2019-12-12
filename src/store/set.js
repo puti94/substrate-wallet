@@ -6,7 +6,4 @@ import {action, thunk} from 'easy-peasy';
 
 export default {
   lang: 'en',
-  addPair: action((state, lang) => {
-    state.lang = lang;
-  }),
 };

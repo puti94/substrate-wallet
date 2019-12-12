@@ -17,20 +17,33 @@ import AddressText from '../../components/AddressText';
 import {useAccounts} from '../../hooks';
 import {theme} from '../../config/theme';
 import CommonButton from '../../components/CommonButton';
+import {EmptyView} from '../../components/EmptyView';
+import {useStoreActions, useStoreState} from 'easy-peasy';
+import {toHex} from '../../utils/defaults';
+import AccountName from '../../components/AccountName';
+import AccountIndex from '../../components/AccountIndex';
 
-export default function AccountsDrawer() {
+export default function AccountsDrawer({onClose}) {
   const allAccounts = useAccounts();
   return (
     <BaseContainer
       fitIPhoneX
+      useApiStatus
       style={{width: px2dp(500), backgroundColor: 'white'}}
       title={'选择账号'}
       hideLeft
       navStyle={{backgroundColor: 'white'}}
       titleStyle={{color: 'black'}}>
       <ScrollView style={{flex: 1}}>
+        {allAccounts.length === 0 && <EmptyView emptyTitle={'账户为空'} />}
         {allAccounts.map(t => (
-          <AccountItem key={t} address={t} />
+          <AccountItem
+            key={t}
+            accountId={t}
+            onSelected={() => {
+              onClose && onClose();
+            }}
+          />
         ))}
       </ScrollView>
       <View style={{minHeight: px2dp(400), marginTop: px2dp(20)}}>
@@ -44,14 +57,43 @@ export default function AccountsDrawer() {
   );
 }
 
-function AccountItem({address}) {
-  const {meta = {}} = keyring.getPair(address);
+function AccountItem({accountId, onSelected}) {
+  const {meta = {}, address} = keyring.getPair(accountId);
+  const selectedAccount = useStoreState(
+    state => state.accounts.selectedAccount,
+  );
+  const setSelectedAccount = useStoreActions(
+    actions => actions.accounts.setSelectedAccount,
+  );
+  const isSelected = toHex(selectedAccount.address) === toHex(address);
   return (
-    <TouchableOpacity activeOpacity={0.7} style={styles.items}>
+    <TouchableOpacity
+      onPress={() => {
+        onSelected && onSelected();
+        setSelectedAccount(address);
+      }}
+      activeOpacity={0.7}
+      style={[
+        styles.items,
+        {
+          backgroundColor: isSelected ? theme.baseColor : 'white',
+        },
+      ]}>
       <Identicon value={address} size={px2dp(40)} />
       <View style={{flex: 1, marginLeft: px2dp(20)}}>
-        <Text style={{color: 'black', fontSize: 16}}>{meta.name}</Text>
-        <AddressText needCopy={false} address={address} />
+        <AccountName
+          style={{color: isSelected ? 'white' : 'black', fontSize: 16}}
+          params={address}
+        />
+        <AccountIndex
+          style={{color: isSelected ? 'white' : 'black', fontSize: 14}}
+          params={address}
+        />
+        <AddressText
+          style={{color: isSelected ? 'white' : 'black', fontSize: 12}}
+          needCopy={false}
+          address={address}
+        />
       </View>
     </TouchableOpacity>
   );
@@ -62,7 +104,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: px2dp(20),
-    height: px2dp(100),
+    height: px2dp(140),
     backgroundColor: 'white',
     borderWidth: theme.hairline,
     borderColor: theme.borderColor,

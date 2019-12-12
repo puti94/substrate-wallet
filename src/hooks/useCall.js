@@ -17,7 +17,7 @@ function extractParams(fn, params, paramMap) {
 
 export default function useCall(
   fn,
-  params,
+  params = [],
   {defaultValue, isSingle, transform = v => v, paramMap = v => v} = {},
 ) {
   const [value, setValue] = useState(defaultValue);

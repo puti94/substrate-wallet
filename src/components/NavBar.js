@@ -95,9 +95,7 @@ export default class NavBar extends PureComponent<Props> {
             centerView
           ) : (
             <View style={styles.centerContain}>
-              <Text
-                style={[styles.titleText, titleStyle]}
-                numberOfLines={1}>
+              <Text style={[styles.titleText, titleStyle]} numberOfLines={1}>
                 {title}
               </Text>
             </View>
@@ -194,6 +192,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.navigationColor,
     width: '100%',
     paddingHorizontal: 15,
+    borderBottomWidth: theme.hairline,
+    borderBottomColor: theme.borderColor,
   },
   shadow: {
     shadowColor: '#000',
@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     color: theme.navigationTitle,
+    fontWeight: 'bold',
     fontSize: 18,
   },
   buttonText: {

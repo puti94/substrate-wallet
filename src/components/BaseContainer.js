@@ -6,9 +6,13 @@ import {View, StyleSheet, StatusBar, Platform} from 'react-native';
 import NavBar, {Props as NavBarProps} from './NavBar';
 import {theme} from '../config/theme';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useApi} from '../hooks';
+import LoadingView from './LoadingView';
+import ErrorView from './ErrorView';
 
 type Props = {
   fitIPhoneX?: boolean,
+  useApiStatus?: boolean,
   navBar?: null | Component,
   contentContainerStyle?: any,
   useScrollView?: boolean,
@@ -31,7 +35,22 @@ function BaseContainer(props: Props) {
 }
 
 function Content(props) {
-  const {children, useScrollView, contentContainerStyle, fitIPhoneX} = props;
+  const {isApiReady, isApiConnectedError} = useApi();
+  const {
+    children,
+    useScrollView,
+    contentContainerStyle,
+    useApiStatus,
+    fitIPhoneX,
+  } = props;
+  if (useApiStatus) {
+    if (!isApiReady) {
+      return <LoadingView title={'连接中'} />;
+    }
+    if (isApiConnectedError) {
+      return <ErrorView errorText={'连接失败'} btnTitle={'切换节点'} />;
+    }
+  }
   const Contain = useScrollView ? KeyboardAwareScrollView : View;
   let containProps = {};
   if (useScrollView) {

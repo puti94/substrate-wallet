@@ -84,8 +84,9 @@ type Props = {
 };
 
 CommonButton.defaultProps = {
-  type: 'highlight',
+  type: 'opacity',
   underlayColor: '#6885F6',
+  activeOpacity: 0.7,
 };
 
 const styles = StyleSheet.create({
