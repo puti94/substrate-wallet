@@ -7,14 +7,17 @@ import AsyncStorage from '@react-native-community/async-storage';
 class Storage {
   constructor() {
     this.dataMap = new Map();
-    this.loading = true;
+    this.loaded = false;
   }
 
   init = async () => {
+    if (this.loaded) {
+      return;
+    }
     const keys = await AsyncStorage.getAllKeys();
     const data = await AsyncStorage.multiGet(keys);
     data.forEach(this.saveItem.bind(this));
-    this.loading = false;
+    this.loaded = true;
     return [...data];
   };
 

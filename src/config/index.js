@@ -2,7 +2,7 @@
  * User: puti.
  * Time: 2019-12-11 17:11.
  */
-import './store';
+import './storage';
 import {px2dp, fontSize} from './theme';
 import {translate} from '../i18n';
 import {Platform, StatusBar, YellowBox} from 'react-native';

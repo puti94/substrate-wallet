@@ -5,4 +5,4 @@
 import isEqual from './isEqual';
 import triggerChange from './triggerChange';
 
-export { isEqual, triggerChange};
+export {isEqual, triggerChange};

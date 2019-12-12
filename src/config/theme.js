@@ -5,7 +5,7 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-
+import {Theme} from 'teaset';
 //设计宽度
 const basePixelWidth = 750;
 const {width} = Dimensions.get('window');
@@ -63,3 +63,7 @@ export const theme = {
     return 0;
   },
 };
+Theme.set({
+  tvBarBtnTitleColor: '#aaa',
+  tvBarBtnActiveTitleColor: '#fff',
+});

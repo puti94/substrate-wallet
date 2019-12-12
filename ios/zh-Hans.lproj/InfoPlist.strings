@@ -1,0 +1,21 @@
+/* 
+  InfoPlist.strings
+  substrateWallet
+
+  Created by puti on 2019/12/12.
+  Copyright © 2019 Facebook. All rights reserved.
+*/
+"CFBundleDisplayName"="波卡钱包";
+"NSAppleMusicUsageDescription"="App需要您的同意,才能访问音乐";
+"NSBluetoothPeripheralUsageDescription"="App需要您的同意,才能访问蓝牙";
+"NSCalendarsUsageDescription"="App需要您的同意,才能访问日历";
+"NSCameraUsageDescription"="App需要您的同意,才能访问相机,以便使用扫码等功能";
+"NSMotionUsageDescription"="App需要您的同意,才能访问运动与健身";
+"NSPhotoLibraryUsageDescription"="App需要您的同意,才能访问相册,以便使用扫码等功能";
+"NSSpeechRecognitionUsageDescription"="App需要您的同意,才能访问语音识别";
+"NSMicrophoneUsageDescription"="App需要您的同意,才能访问语音识别";
+"NSFaceIDUsageDescription"="启用Face ID允许您快速和安全地访问您的帐户";
+"NSLocationUsageDescription"="App需要您的同意,才能访问位置";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="App需要您的同意,才能访问位置";
+"NSLocationAlwaysUsageDescription"="App需要您的同意,才能访问位置";
+"NSLocationWhenInUseUsageDescription"="App需要您的同意,才能访问位置";

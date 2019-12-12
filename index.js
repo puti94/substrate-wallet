@@ -1,6 +1,8 @@
 /**
  * @format
  */
+require('node-libs-react-native/globals');
+import './nodeGlobalsShim';
 import './src/config';
 import {AppRegistry} from 'react-native';
 import App from './App';

@@ -21,11 +21,11 @@ function BaseContainer(props: Props) {
       StatusBar.setBackgroundColor('transparent');
     }
   }, []);
-  const {style} = props;
+  const {style, ...otherProps} = props;
   return (
     <View style={[styles.container, style]}>
-      <NavView {...props} />
-      <Content {...props} />
+      <NavView {...otherProps} />
+      <Content {...otherProps} />
     </View>
   );
 }

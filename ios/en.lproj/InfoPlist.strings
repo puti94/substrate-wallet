@@ -1,0 +1,21 @@
+/* 
+  InfoPlist.strings
+  substrateWallet
+
+  Created by puti on 2019/12/12.
+  Copyright © 2019 Facebook. All rights reserved.
+*/
+"CFBundleDisplayName"="PolkaWallet";
+"NSAppleMusicUsageDescription"="The App needs your permission to access music";
+"NSBluetoothPeripheralUsageDescription"="The App needs your permission to access bluetooth";
+"NSCalendarsUsageDescription"="The App needs your permission to access the calendar";
+"NSCameraUsageDescription"="App needs your permission to access the camera,In order to use scanning code and other functions";
+"NSMotionUsageDescription"="App needs your permission to access motion";
+"NSPhotoLibraryUsageDescription"="The App needs your permission to access the photo library,In order to use scanning code and other functions";
+"NSSpeechRecognitionUsageDescription"="The App needs your permission to access the speech recognition";
+"NSMicrophoneUsageDescription"="The App needs your consent to access the recording";
+"NSFaceIDUsageDescription"="Enabling Face ID allows you quick and secure access to your account";
+"NSLocationUsageDescription"="App needs your permission to access location";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="App needs your permission to access location";
+"NSLocationAlwaysUsageDescription"="App needs your permission to access location";
+"NSLocationWhenInUseUsageDescription"="App needs your permission to access location";

@@ -7,9 +7,12 @@ import {ApiPromise, WsProvider} from '@polkadot/api';
 import {formatBalance, isTestChain} from '@polkadot/util';
 import {TypeRegistry} from '@polkadot/types';
 import ApiContext from './ApiContext';
-
+import typesSpec from './overrides/spec';
+import addressDefaults from '@polkadot/util-crypto/address/defaults';
+import keyring from '@polkadot/ui-keyring';
+import KeyringStore from '../utils/KeyringStore';
 const DEFAULT_DECIMALS = 12;
-const DEFAULT_SS58 = 158;
+const DEFAULT_SS58 = addressDefaults.prefix;
 const register = new TypeRegistry();
 let api, node;
 
@@ -52,7 +55,7 @@ export default class Api extends React.PureComponent {
   }
 
   createApi(provider) {
-    return new ApiPromise({provider, register});
+    return new ApiPromise({provider, register, typesSpec});
   }
 
   componentDidMount() {
@@ -132,13 +135,14 @@ export default class Api extends React.PureComponent {
       unit: tokenSymbol,
     });
     // // finally load the keyring
-    // keyring.loadAll({
-    //   addressPrefix: ss58Format,
-    //   genesisHash: api.genesisHash,
-    //   isDevelopment,
-    //   ss58Format,
-    //   type: 'ed25519'
-    // })
+    keyring.loadAll({
+      addressPrefix: ss58Format,
+      genesisHash: api.genesisHash,
+      isDevelopment,
+      ss58Format,
+      type: 'sr25519',
+      store: KeyringStore,
+    });
 
     const defaultSection = Object.keys(api.tx)[0];
     const defaultMethod = Object.keys(api.tx[defaultSection])[0];

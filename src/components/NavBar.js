@@ -1,17 +1,9 @@
 import React, {PureComponent} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {px2dp, theme} from '../config/theme';
 import {Menu} from 'teaset';
 import {RouteHelper} from 'react-navigation-easy-helper';
 import Icon from './Icon';
-
-const {width} = Dimensions.get('window');
 
 export type Props = {
   title?: string,
@@ -24,10 +16,12 @@ export type Props = {
   rightPress?: Function,
   rightView?: any,
   rightIcon?: any,
+  titleStyle?: any,
   rightTitle?: string,
   hasShadow?: boolean,
   rightMenus?: Array,
   centerView?: any,
+  navStyle?: any,
   rightMenu?: Array,
   leftIconSize?: number,
   rightIconSize?: number,
@@ -61,6 +55,7 @@ export default class NavBar extends PureComponent<Props> {
       navStyle,
       leftIconSize,
       rightIconSize,
+      titleStyle,
     } = this.props;
 
     let leftViewPress = null;
@@ -100,7 +95,9 @@ export default class NavBar extends PureComponent<Props> {
             centerView
           ) : (
             <View style={styles.centerContain}>
-              <Text style={styles.titleText} numberOfLines={1}>
+              <Text
+                style={[styles.titleText, titleStyle]}
+                numberOfLines={1}>
                 {title}
               </Text>
             </View>
@@ -123,7 +120,6 @@ const BothSideView = ({
   iconSize,
 }) => {
   let subView, ins;
-  const iconStyle = {width: iconSize, height: iconSize};
   if (view) {
     subView = view;
   } else if (!icon && menu && menu.length !== 0) {
@@ -138,7 +134,6 @@ const BothSideView = ({
           </Text>
         ) : (
           <Icon
-            style={iconStyle}
             icon={item.icon}
             size={iconSize}
             color={theme.navigationIcon}
@@ -181,7 +176,6 @@ const BothSideView = ({
           </Text>
         ) : (
           <Icon
-            style={iconStyle}
             icon={icon}
             size={iconSize}
             color={theme.navigationIcon}
@@ -198,7 +192,7 @@ const styles = StyleSheet.create({
     paddingTop: theme.statusBarHeight,
     height: 44 + theme.statusBarHeight,
     backgroundColor: theme.navigationColor,
-    width: width,
+    width: '100%',
     paddingHorizontal: 15,
   },
   shadow: {

@@ -35,6 +35,7 @@
 		C526EB1D23A0CF7F00C911A1 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C526EB0D23A0CF7F00C911A1 /* EvilIcons.ttf */; };
 		C526EB1E23A0CF7F00C911A1 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C526EB0E23A0CF7F00C911A1 /* SimpleLineIcons.ttf */; };
 		C526EB1F23A0CF7F00C911A1 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C526EB0F23A0CF7F00C911A1 /* MaterialIcons.ttf */; };
+		C526EB2223A20A5F00C911A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C526EB2423A20A5F00C911A1 /* InfoPlist.strings */; };
 		ECD32FE31965F29186002450 /* libPods-substrateWallet-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C66072A3A9F53D5CDB98E7B5 /* libPods-substrateWallet-tvOS.a */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +94,9 @@
 		C526EB0D23A0CF7F00C911A1 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		C526EB0E23A0CF7F00C911A1 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		C526EB0F23A0CF7F00C911A1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		C526EB2323A20A5F00C911A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C526EB2523A20A7E00C911A1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		C526EB2623A20A7F00C911A1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		C66072A3A9F53D5CDB98E7B5 /* libPods-substrateWallet-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-substrateWallet-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD7AC5C894A4BB8013E296C /* Pods-substrateWalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-substrateWalletTests.release.xcconfig"; path = "Target Support Files/Pods-substrateWalletTests/Pods-substrateWalletTests.release.xcconfig"; sourceTree = "<group>"; };
 		E318FE78075E69DA0DE7C4FC /* libPods-substrateWallet-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-substrateWallet-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,6 +169,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				C526EB2423A20A5F00C911A1 /* InfoPlist.strings */,
 			);
 			name = substrateWallet;
 			sourceTree = "<group>";
@@ -348,6 +353,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = Y49FB37NS3;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -367,6 +375,7 @@
 				English,
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -403,6 +412,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				C526EB1C23A0CF7F00C911A1 /* Zocial.ttf in Resources */,
 				C526EB1E23A0CF7F00C911A1 /* SimpleLineIcons.ttf in Resources */,
+				C526EB2223A20A5F00C911A1 /* InfoPlist.strings in Resources */,
 				C526EB1223A0CF7F00C911A1 /* Feather.ttf in Resources */,
 				C526EB1123A0CF7F00C911A1 /* Octicons.ttf in Resources */,
 				C526EB1423A0CF7F00C911A1 /* FontAwesome5_Brands.ttf in Resources */,
@@ -444,7 +454,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\nexport NODE_ARGS=--max_old_space_size=8192\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2A1A0782E8AA32B75829AC5A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -695,9 +705,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				13B07FB21A68108700A75B9A /* Base */,
+				C526EB2523A20A7E00C911A1 /* zh-Hans */,
 			);
 			name = LaunchScreen.xib;
 			path = substrateWallet;
+			sourceTree = "<group>";
+		};
+		C526EB2423A20A5F00C911A1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C526EB2323A20A5F00C911A1 /* en */,
+				C526EB2623A20A7F00C911A1 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -753,6 +773,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = Y49FB37NS3;
 				INFOPLIST_FILE = substrateWallet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -760,7 +781,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.puti.substrate.wallet;
 				PRODUCT_NAME = substrateWallet;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -772,6 +793,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y49FB37NS3;
 				INFOPLIST_FILE = substrateWallet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -779,7 +801,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.puti.substrate.wallet;
 				PRODUCT_NAME = substrateWallet;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -899,6 +921,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -952,6 +975,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
