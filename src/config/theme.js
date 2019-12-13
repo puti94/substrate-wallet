@@ -18,7 +18,7 @@ export const theme = {
   baseColor: '#3288bd',
   navigationColor: '#fdfdfd',
   line: '#EAEAEA',
-  backgroundColor: '#f9f9f9',
+  backgroundColor: '#f3f4f6',
   navigationTitle: '#343434',
   navigationIcon: '#343434',
   borderColor: '#E6E6E6',

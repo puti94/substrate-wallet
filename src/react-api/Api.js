@@ -11,6 +11,9 @@ import typesSpec from './overrides/spec';
 import addressDefaults from '@polkadot/util-crypto/address/defaults';
 import keyring from '@polkadot/ui-keyring';
 import KeyringStore from '../utils/KeyringStore';
+import {ENDPOINT_DEFAULT} from '../config/endpoints';
+import {STORE_SETTING_ENDPOINT} from '../config';
+
 const DEFAULT_DECIMALS = 12;
 const DEFAULT_SS58 = addressDefaults.prefix;
 const register = new TypeRegistry();
@@ -23,13 +26,14 @@ export default class Api extends React.PureComponent {
 
   constructor(props) {
     super(props);
-
-    const {url} = props;
+    const url =
+      localStorage.getItem(STORE_SETTING_ENDPOINT) || ENDPOINT_DEFAULT;
     const provider = new WsProvider(url);
 
     const setApi = async provider => {
       api = this.createApi(provider);
       node = provider.endpoint;
+      localStorage.setItem(STORE_SETTING_ENDPOINT, provider.endpoint);
       this.unsubscribeEvents();
       this.setState(
         {api, endpoint: provider.endpoint, isApiReady: false},
@@ -135,14 +139,6 @@ export default class Api extends React.PureComponent {
       unit: tokenSymbol,
     });
     // // finally load the keyring
-    keyring.loadAll({
-      addressPrefix: ss58Format,
-      genesisHash: api.genesisHash,
-      isDevelopment,
-      ss58Format,
-      type: 'sr25519',
-      store: KeyringStore,
-    });
 
     const defaultSection = Object.keys(api.tx)[0];
     const defaultMethod = Object.keys(api.tx[defaultSection])[0];
@@ -163,6 +159,14 @@ export default class Api extends React.PureComponent {
       systemChain,
       systemName: _systemName.toString(),
       systemVersion: _systemVersion.toString(),
+    });
+    keyring.loadAll({
+      addressPrefix: ss58Format,
+      genesisHash: api.genesisHash,
+      isDevelopment,
+      ss58Format,
+      type: 'sr25519',
+      store: KeyringStore,
     });
   }
 

@@ -7,16 +7,18 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {configRoute} from 'react-navigation-easy-helper';
 import {Launch} from './pages/Launch';
 import {Accounts} from './pages/accounts';
-import Home from './pages/Home';
+import Main from './pages/Main';
 import QRReading from './pages/QRReading';
+import NodeSet from './pages/set/NodeSet';
 
 const getAppNavigator = ({initialRouteName}) =>
   createStackNavigator(
     configRoute({
       Launch: {screen: Launch},
-      Home: {screen: Home},
+      Main: {screen: Main},
       Accounts: {screen: Accounts},
       QRReading: {screen: QRReading},
+      NodeSet: {screen: NodeSet},
     }),
     {
       initialRouteName: initialRouteName,

@@ -7,9 +7,10 @@ import {TabView} from 'teaset';
 import BaseContainer from '../components/BaseContainer';
 import Icon from '../components/Icon';
 import {theme} from '../config/theme';
-import {Assets} from './Assets';
+import Home from './Home';
+import {Settings} from './set';
 
-function Home() {
+function Main() {
   return (
     <BaseContainer navBar={null}>
       <TabView
@@ -17,7 +18,7 @@ function Home() {
         type="projector"
         barStyle={{backgroundColor: theme.navigationColor}}>
         <TabView.Sheet
-          title={'资产'}
+          title={'首页'}
           icon={
             <Icon
               icon={'MaterialCommunityIcons/home-circle'}
@@ -31,7 +32,7 @@ function Home() {
               color={theme.baseColor}
             />
           }>
-          <Assets />
+          <Home />
         </TabView.Sheet>
         <TabView.Sheet
           title={'模块'}
@@ -47,11 +48,11 @@ function Home() {
           activeIcon={
             <Icon icon={'setting'} size={px2dp(40)} color={theme.baseColor} />
           }>
-          {/*<Setting />*/}
+          <Settings />
         </TabView.Sheet>
       </TabView>
     </BaseContainer>
   );
 }
 
-export default Home;
+export default Main;

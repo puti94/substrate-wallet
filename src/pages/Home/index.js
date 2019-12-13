@@ -18,10 +18,10 @@ import AccountName from '../../components/AccountName';
 import AccountIndex from '../../components/AccountIndex';
 import BestNumber from '../../components/BestNumber';
 import RuntimeVersion from '../../components/RuntimeVersion';
-import {icons} from '../../assets';
 import {theme} from '../../config/theme';
+import ChainImg from '../../components/ChainImg';
 
-export function Assets() {
+export default function Home() {
   return (
     <BaseContainer
       title={'钱包'}
@@ -85,8 +85,8 @@ function ChainInfo() {
           alignItems: 'center',
           marginLeft: px2dp(25),
         }}>
-        <Icon icon={icons.logo} size={px2dp(80)} />
-        <View style={{marginLeft: px2dp(40)}}>
+        <ChainImg size={px2dp(80)} />
+        <View style={{marginLeft: px2dp(20)}}>
           <Text>{systemChain}</Text>
           <RuntimeVersion />
           <BestNumber label={'#'} />

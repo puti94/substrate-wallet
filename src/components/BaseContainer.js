@@ -44,6 +44,7 @@ function Content(props) {
     fitIPhoneX,
   } = props;
   if (useApiStatus) {
+    console.log('isApiReady', isApiReady);
     if (!isApiReady) {
       return <LoadingView title={'连接中'} />;
     }

@@ -19,11 +19,12 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import Zocial from 'react-native-vector-icons/Zocial';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
-export default function Icon(props: {
+export type Props = {
   icon: string | number,
   size: number,
   color?: string,
-}) {
+};
+export default function Icon(props: Props) {
   const {icon, size, style = {}, color} = props;
   if (typeof icon === 'string') {
     const [_one, _two] = icon.split('/');

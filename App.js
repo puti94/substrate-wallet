@@ -32,13 +32,11 @@ const App = () => {
     return null;
   }
   const Navigator = getNavigator({
-    initialRouteName: 'Home',
+    initialRouteName: 'Main',
   });
-  // let url = 'wss://testnet2.edgewa.re';
-  let url = 'ws://127.0.0.1:9944/';
   return (
     <StoreProvider store={store}>
-      <Api url={url}>
+      <Api>
         <TopView>
           <Navigator />
         </TopView>
