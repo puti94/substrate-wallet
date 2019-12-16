@@ -16,3 +16,13 @@ export function formatBalance(value = 0): string {
   const a = s.substr(s.length - decimals, 3);
   return `${b}.${a} ${unit}`;
 }
+
+export function toBN(number): BN {
+  if (!number) {
+    return new BN(0);
+  }
+  const {decimals} = _formatBalance.getDefaults();
+  let [a, b = '0'] = `${number}`.split('.');
+  let s1 = `${a}${b.padEnd(decimals, '0')}`;
+  return new BN(s1);
+}

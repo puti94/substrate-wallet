@@ -11,7 +11,11 @@ import {showAlert} from './dialog';
 
 const ADDRESS_PREFIX = 'substrate';
 
-export async function showDecodeAddressQR() {
+export async function showDecodeAddressQR(): Promise<{
+  address: string,
+  genesisHash: string,
+  assetId?: string,
+}> {
   await checkPermission();
   return new Promise((resolve, reject) => {
     RouteHelper.navigate('QRReading', {

@@ -16,7 +16,13 @@ export * from './constant';
 global.px2dp = px2dp;
 global.i18n = translate;
 global.fontSize = fontSize;
-YellowBox.ignoreWarnings(['Require cycles', 'Remote debugger', 'unknown call']);
+YellowBox.ignoreWarnings([
+  'Require cycles',
+  'Remote debugger',
+  'unknown call',
+  'persist',
+  "(evaluating '_e$target.name')",
+]);
 //修复安卓沉浸式状态栏Teaset的问题
 if (Platform.OS === 'android') {
   const menuShow = Menu.show.bind(Menu);

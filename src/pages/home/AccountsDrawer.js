@@ -22,6 +22,7 @@ import {useStoreActions, useStoreState} from 'easy-peasy';
 import {toHex} from '../../utils/defaults';
 import AccountName from '../../components/AccountName';
 import AccountIndex from '../../components/AccountIndex';
+import {RouteHelper} from 'react-navigation-easy-helper';
 
 export default function AccountsDrawer({onClose}) {
   const allAccounts = useAccounts();
@@ -48,8 +49,11 @@ export default function AccountsDrawer({onClose}) {
       </ScrollView>
       <View style={{minHeight: px2dp(400), marginTop: px2dp(20)}}>
         <CommonButton
-          onPress={() => {}}
-          title={'创建钱包'}
+          onPress={() => {
+            onClose && onClose();
+            RouteHelper.navigate('AddAccount');
+          }}
+          title={'添加钱包'}
           icon={'addfolder'}
         />
       </View>
@@ -65,7 +69,9 @@ function AccountItem({accountId, onSelected}) {
   const setSelectedAccount = useStoreActions(
     actions => actions.accounts.setSelectedAccount,
   );
-  const isSelected = toHex(selectedAccount.address) === toHex(address);
+  const isSelected = selectedAccount
+    ? toHex(selectedAccount.address) === toHex(address)
+    : false;
   return (
     <TouchableOpacity
       onPress={() => {

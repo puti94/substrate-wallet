@@ -10,6 +10,7 @@ import {Accounts} from './pages/accounts';
 import Main from './pages/Main';
 import QRReading from './pages/QRReading';
 import NodeSet from './pages/set/NodeSet';
+import AddAccount from './pages/accounts/AddAccount';
 
 const getAppNavigator = ({initialRouteName}) =>
   createStackNavigator(
@@ -17,6 +18,7 @@ const getAppNavigator = ({initialRouteName}) =>
       Launch: {screen: Launch},
       Main: {screen: Main},
       Accounts: {screen: Accounts},
+      AddAccount: {screen: AddAccount},
       QRReading: {screen: QRReading},
       NodeSet: {screen: NodeSet},
     }),

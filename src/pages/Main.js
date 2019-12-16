@@ -7,7 +7,7 @@ import {TabView} from 'teaset';
 import BaseContainer from '../components/BaseContainer';
 import Icon from '../components/Icon';
 import {theme} from '../config/theme';
-import Home from './Home';
+import Home from './home';
 import {Settings} from './set';
 
 function Main() {

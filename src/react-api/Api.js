@@ -148,6 +148,14 @@ export default class Api extends React.PureComponent {
       (api.tx.consensus && api.tx.consensus.setCode) || // 1.x
       apiDefaultTx; // other
     const isSubstrateV2 = !!Object.keys(api.consts).length;
+    keyring.loadAll({
+      addressPrefix: ss58Format,
+      genesisHash: api.genesisHash,
+      isDevelopment,
+      ss58Format,
+      type: 'sr25519',
+      store: KeyringStore,
+    });
     this.setState({
       apiDefaultTx,
       apiDefaultTxSudo,
@@ -159,14 +167,6 @@ export default class Api extends React.PureComponent {
       systemChain,
       systemName: _systemName.toString(),
       systemVersion: _systemVersion.toString(),
-    });
-    keyring.loadAll({
-      addressPrefix: ss58Format,
-      genesisHash: api.genesisHash,
-      isDevelopment,
-      ss58Format,
-      type: 'sr25519',
-      store: KeyringStore,
     });
   }
 
