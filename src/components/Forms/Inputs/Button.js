@@ -44,6 +44,10 @@ export default class Button<T> extends Component<T & Props> {
   }
 
   getShowValue(value) {
+    const {formatValue} = this.props;
+    if (formatValue) {
+      return formatValue(value);
+    }
     return value;
   }
 

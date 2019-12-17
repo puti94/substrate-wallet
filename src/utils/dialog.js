@@ -20,13 +20,19 @@ export function alertWithType(
   type: 'info' | 'warn' | 'error' | 'custom' | 'success',
   title: string,
   message: string,
-  payload?: object,
+  payload?: Object,
   interval?: number,
 ) {
   // noticeRef && noticeRef.closeAction();
   noticeRef && noticeRef.alertWithType(type, title, message, payload, interval);
 }
 
+/**
+ *
+ * @param title
+ * @param type secure-text | none
+ * @returns {Promise<any> | Promise<*>}
+ */
 export function showTextInput({title = '请输入', type}) {
   return new Promise((resolve, reject) => {
     if (Platform.OS === 'ios') {

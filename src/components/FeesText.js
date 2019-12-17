@@ -9,6 +9,7 @@ import {withApi, withCalls} from '../react-api/with';
 import {compactToU8a} from '@polkadot/util';
 import BN from 'bn.js';
 import {formatBalance} from '../utils/format';
+
 const LENGTH_ADDRESS = 32 + 1; // publicKey + prefix
 const LENGTH_ERA = 2; // assuming mortals
 const LENGTH_SIGNATURE = 64; // assuming ed25519 or sr25519
@@ -26,11 +27,6 @@ const calcTxLength = (extrinsic, nonce, tip) => {
   );
 };
 
-const WEIGHT = {
-  'balances.transfer': '1000000',
-  'assets.transfer': '500000',
-};
-
 class FeesText extends PureComponent<{methods: string, args: Array}> {
   render() {
     let {
@@ -39,9 +35,9 @@ class FeesText extends PureComponent<{methods: string, args: Array}> {
       creationFee = new BN(0),
       transferFee = new BN(0),
       nextFeeMultiplier = new BN(0),
-      weightFeeCoefficient = new BN(0),
       system_accountNonce,
       api,
+      accountsInfo,
       methods,
       args = [],
       onChange,
@@ -51,7 +47,6 @@ class FeesText extends PureComponent<{methods: string, args: Array}> {
     creationFee = creationFee || new BN(0);
     nextFeeMultiplier = nextFeeMultiplier || new BN(0);
     transferFee = transferFee || new BN(0);
-    weightFeeCoefficient = weightFeeCoefficient || new BN(0);
     let txLength = new BN(0);
     try {
       const [section, method] = methods.split('.');
@@ -60,17 +55,13 @@ class FeesText extends PureComponent<{methods: string, args: Array}> {
     } catch (e) {}
     let value = transactionBaseFee
       .add(transactionByteFee.mul(txLength))
-      .add(creationFee)
       .add(transferFee);
-
-    if (WEIGHT[methods]) {
-      let b = weightFeeCoefficient.mul(new BN(WEIGHT[methods]));
-      value = value.add(b);
+    //如果没有创建,添加创建手续费
+    if (accountsInfo && !accountsInfo.accountIndex) {
+      value = value.add(creationFee);
     }
     const coefficient = nextFeeMultiplier.mul(value).div(new BN(1000000000));
     value = value.add(coefficient);
-    // .mul(new BN(3)) //暂时乘以一个1.5系数使它多于正常手续费
-    // .div(new BN(2));
     onChange && onChange(value);
     return <Text {...this.props}>{formatBalance(value)}</Text>;
   }
@@ -106,6 +97,10 @@ export default withApi(props => {
         {propName: 'nextFeeMultiplier'},
       ],
       ['query.system.accountNonce', {paramName: 'accountId'}],
+      props.receipt && [
+        'derive.accounts.info',
+        {paramName: 'receipt', propName: 'accountsInfo'},
+      ],
       [
         'consts.transactionPayment.transactionBaseFee',
         {propName: 'transactionBaseFee'},

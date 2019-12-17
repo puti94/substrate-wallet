@@ -15,6 +15,13 @@ import AccountSet from './pages/set/AccountSet';
 import ChangePassword from './pages/set/ChangePassword';
 import Backup from './pages/accounts/Backup';
 import ConfirmMnemonic from './pages/accounts/ConfirmMnemonic';
+import ExportKeystore from './pages/set/ExportKeystore';
+import ReceiveQRCode from './pages/accounts/ReceiveQRCode';
+import Transfer from './pages/accounts/Transfer';
+import WebPage from './pages/web';
+import AboutUs from './pages/set/AboutUs';
+import Toolbox from './pages/modules/Toolbox';
+import ChainState from './pages/modules/ChainState';
 
 const getAppNavigator = ({initialRouteName}) =>
   createStackNavigator(
@@ -25,8 +32,15 @@ const getAppNavigator = ({initialRouteName}) =>
       AddAccount: {screen: AddAccount},
       ChangePassword: {screen: ChangePassword},
       AccountSet: {screen: AccountSet},
+      ExportKeystore: {screen: ExportKeystore},
+      ReceiveQRCode: {screen: ReceiveQRCode},
       Backup: {screen: Backup},
       ConfirmMnemonic: {screen: ConfirmMnemonic},
+      ChainState: {screen: ChainState},
+      Toolbox: {screen: Toolbox},
+      AboutUs: {screen: AboutUs},
+      Web: {screen: WebPage},
+      Transfer: {screen: Transfer},
       QRReading: {screen: QRReading},
       NodeSet: {screen: NodeSet},
     }),

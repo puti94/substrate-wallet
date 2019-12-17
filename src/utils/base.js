@@ -21,12 +21,12 @@ export async function showDecodeAddressQR(): Promise<{
     RouteHelper.navigate('QRReading', {
       success: data => {
         try {
-          let [prefix, address, genesisHash, assetId] = data.split(':');
+          let [prefix, address, genesisHash] = data.split(':');
           if (prefix !== ADDRESS_PREFIX) {
             throw new Error();
           }
           address = encodeAddress(decodeAddress(address));
-          resolve({address, genesisHash, assetId});
+          resolve({address, genesisHash});
         } catch (error) {
           showAlert('二维码格式错误');
           reject();

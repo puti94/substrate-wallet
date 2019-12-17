@@ -15,5 +15,6 @@ export default function BalanceText({address, onChange, ...otherParams}) {
     isApiReady ? api.query.balances.freeBalance : null,
     [address],
   );
+  onChange && onChange(balancesValue);
   return <Text {...otherParams}>{formatBalance(balancesValue)}</Text>;
 }

@@ -21,6 +21,7 @@ import RuntimeVersion from '../../components/RuntimeVersion';
 import {theme} from '../../config/theme';
 import ChainImg from '../../components/ChainImg';
 import {RouteHelper} from 'react-navigation-easy-helper';
+import BalanceText from '../../components/BalanceText';
 
 export default function Home() {
   return (
@@ -30,7 +31,9 @@ export default function Home() {
       leftIcon={'FontAwesome5/users'}
       rightIcon={'scan1'}
       rightPress={() => {
-        showDecodeAddressQR().then(res => {});
+        showDecodeAddressQR().then(res => {
+          RouteHelper.navigate('Transfer', {receipt: res.address});
+        });
       }}
       leftPress={() => {
         const drawer = Drawer.open(
@@ -145,7 +148,9 @@ function Header() {
                 address={selectedAccount.address}
               />
             </View>
-            <TouchableOpacity style={{alignSelf: 'flex-start'}}>
+            <TouchableOpacity
+              style={{alignSelf: 'flex-start'}}
+              onPress={() => RouteHelper.navigate('AccountSet')}>
               <Icon
                 color={'white'}
                 icon={'Feather/more-horizontal'}
@@ -154,8 +159,25 @@ function Header() {
             </TouchableOpacity>
           </View>
           <View style={{marginTop: px2dp(20), flex: 1, flexDirection: 'row'}}>
-            <View style={{flex: 1}} />
-            <TouchableOpacity style={{alignSelf: 'flex-end'}}>
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <BalanceText
+                style={{
+                  alignSelf: 'flex-end',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: 22,
+                  marginLeft: px2dp(30),
+                }}
+                address={selectedAccount.address}
+              />
+            </View>
+            <TouchableOpacity
+              style={{alignSelf: 'flex-end'}}
+              onPress={() => {
+                RouteHelper.navigate('ReceiveQRCode', {
+                  address: selectedAccount.address,
+                });
+              }}>
               <Icon color={'white'} icon={'qrcode'} size={px2dp(50)} />
             </TouchableOpacity>
           </View>

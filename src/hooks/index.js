@@ -8,8 +8,8 @@ import {hasApis} from '../utils/base';
 
 export {default as useCall} from './useCall';
 export {default as useAccounts} from './useAccounts';
-export {default as useAddresses} from './useAddresses';
 export {default as useSelectedAccount} from './useSelectedAccount';
+export {default as useSendTx} from './useSendTx';
 
 export function useApi() {
   return useContext(ApiContext);

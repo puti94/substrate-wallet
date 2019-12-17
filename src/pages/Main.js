@@ -9,6 +9,7 @@ import Icon from '../components/Icon';
 import {theme} from '../config/theme';
 import Home from './home';
 import {Settings} from './set';
+import Modules from './modules';
 
 function Main() {
   return (
@@ -40,7 +41,7 @@ function Main() {
           activeIcon={
             <Icon icon={'appstore1'} size={px2dp(40)} color={theme.baseColor} />
           }>
-          {/*<Apps />*/}
+          <Modules />
         </TabView.Sheet>
         <TabView.Sheet
           title={'设置'}

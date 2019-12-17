@@ -8,10 +8,13 @@ export default function withCalls(...calls) {
   return Component => {
     // NOTE: Order is reversed so it makes sense in the props, i.e. component
     // after something can use the value of the preceding version
-    return calls.reverse().reduce((Component, call) => {
-      return Array.isArray(call)
-        ? withCall(...call)(Component)
-        : withCall(call)(Component);
-    }, Component);
+    return calls
+      .filter(t => t)
+      .reverse()
+      .reduce((Component, call) => {
+        return Array.isArray(call)
+          ? withCall(...call)(Component)
+          : withCall(call)(Component);
+      }, Component);
   };
 }

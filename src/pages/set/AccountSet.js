@@ -38,13 +38,20 @@ export default function AccountSet() {
   };
   const exportKeystore = async () => {
     const password = await showTextInput({
+      type: 'secure-text',
       title: '输入钱包密码',
     });
     if (!password) {
       showAlert('不能为空');
       return;
     }
-    
+    try {
+      const json = keyring.backupAccount(selectedAccount, password);
+      RouteHelper.navigate('ExportKeystore', {json});
+    } catch (e) {
+      console.log('错误', e);
+      showAlert('密码错误');
+    }
   };
   return (
     <BaseContainer useScrollView title={'钱包管理'}>

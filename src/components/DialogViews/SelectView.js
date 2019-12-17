@@ -72,16 +72,19 @@ const SelectItem = ({selected, value, onPress, getItemText, getItemDetail}) => {
         alignItems: 'center',
         flexDirection: 'row',
         paddingHorizontal: px2dp(20),
-        backgroundColor: selected ? theme.backgroundColor : 'white',
+        backgroundColor: selected ? theme.baseColor : 'white',
         borderBottomColor: theme.borderColor,
         borderBottomWidth: StyleSheet.hairlineWidth,
       }}
       onPress={onPress}>
-      <Text style={styles.text}>
+      <Text style={[styles.text, {color: selected ? 'white' : theme.title}]}>
         {getItemText ? getItemText(value) : value}
       </Text>
       {!!getItemDetail && (
-        <Text style={styles.detail}>{getItemDetail(value)}</Text>
+        <Text
+          style={[styles.detail, {color: selected ? 'white' : theme.title}]}>
+          {getItemDetail(value)}
+        </Text>
       )}
     </TouchableOpacity>
   );
@@ -104,12 +107,12 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   text: {
-    color: '#999',
+    color: theme.title,
     fontSize: 14,
     flex: 1,
   },
   detail: {
-    color: '#aaa',
+    color: theme.content,
     maxWidth: '50%',
     textAlign: 'right',
     fontSize: 12,

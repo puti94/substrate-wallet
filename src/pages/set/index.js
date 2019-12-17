@@ -10,7 +10,7 @@ import {RouteHelper} from 'react-navigation-easy-helper';
 import {useSelectedAccount} from '../../hooks';
 
 export function Settings() {
-  const account = useSelectedAccount;
+  const account = useSelectedAccount();
   return (
     <BaseContainer hideLeft useScrollView title={'设置'}>
       <ListRow
@@ -27,6 +27,12 @@ export function Settings() {
           }}
         />
       )}
+      <ListRow
+        title={'关于我们'}
+        onPress={() => {
+          RouteHelper.navigate('AboutUs');
+        }}
+      />
     </BaseContainer>
   );
 }
