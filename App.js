@@ -8,12 +8,14 @@
 
 import React, {useEffect, useState} from 'react';
 import {StoreProvider} from 'easy-peasy';
+import DropdownAlert from 'react-native-dropdownalert';
 import {store} from './src/store';
 import SplashScreen from 'react-native-splash-screen';
 import getNavigator from './src/Navigator';
 import Api from './src/react-api/Api';
 import {setJSExceptionHandler} from './src/utils/errorHandle';
 import {TopView} from 'teaset';
+import {setNoticeRef} from './src/utils/dialog';
 
 setJSExceptionHandler(() => {}, true);
 const App = () => {
@@ -39,6 +41,11 @@ const App = () => {
       <Api>
         <TopView>
           <Navigator />
+          <DropdownAlert
+            closeInterval={2000}
+            updateStatusBar={false}
+            ref={ref => setNoticeRef(ref)}
+          />
         </TopView>
       </Api>
     </StoreProvider>

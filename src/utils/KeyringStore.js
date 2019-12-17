@@ -14,15 +14,15 @@ export default {
   },
   get: (key, cb) => {
     try {
-      cb(JSON.parse(localStorage.getItem(key)));
+      cb && cb(JSON.parse(localStorage.getItem(key)));
     } catch (e) {
-      cb();
+      cb && cb();
     }
   },
   remove: (key, cb) => {
     localStorage.removeItem(key);
     console.log('remove', key);
-    cb();
+    cb && cb();
   },
   set: (key, value, cb) => {
     try {

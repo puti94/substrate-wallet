@@ -3,6 +3,7 @@
  * Time: 2019-12-11 15:03.
  */
 import React, {useEffect, useState} from 'react';
+import {Platform} from 'react-native';
 import {SegmentedView} from 'teaset';
 import BaseContainer from '../../components/BaseContainer';
 import {
@@ -14,45 +15,47 @@ import {
   TYPE_SELECT,
 } from '../../components/Forms';
 import {isKeystore, isMnemonic, isPassValid} from '../../utils';
+import {RouteHelper} from 'react-navigation-easy-helper';
+import keyring from '@polkadot/ui-keyring';
+import {showAlert, showLoading} from '../../utils/dialog';
+import {useStoreActions} from 'easy-peasy';
 
 function CreateView() {
-  const createFields = buildFields([
-    {
-      label: '钱包名称',
-      prop: 'name',
-      required: true,
-    },
-    {
-      label: '密码',
-      prop: 'password',
-      type: TYPE_PASSWORD,
-      validate: [
-        {
-          verify: isPassValid,
-          message: '密码长度1-32位',
-        },
-      ],
-    },
-    {
-      prop: 'repeatPassword',
-      type: TYPE_PASSWORD,
-      label: '重复密码',
-      validate: [
-        {
-          verify: (value, values) => value === values.password,
-          message: '密码不一致',
-        },
-      ],
-    },
-  ]);
-
   const form = useForm({
-    fields: createFields,
+    fields: buildFields([
+      {
+        label: '钱包名称',
+        prop: 'name',
+        required: true,
+      },
+      {
+        label: '密码',
+        prop: 'password',
+        type: TYPE_PASSWORD,
+        validate: [
+          {
+            verify: isPassValid,
+            message: '密码长度1-32位',
+          },
+        ],
+      },
+      {
+        prop: 'repeatPassword',
+        type: TYPE_PASSWORD,
+        label: '重复密码',
+        validate: [
+          {
+            verify: (value, values) => value === values.password,
+            message: '密码不一致',
+          },
+        ],
+      },
+    ]),
     onSubmit: values => {
-      console.log('提交', values);
+      RouteHelper.navigate('Backup', values);
     },
   });
-  return <BaseForm fields={createFields} {...form} />;
+  return <BaseForm {...form} />;
 }
 
 function ImportView() {
@@ -101,31 +104,71 @@ function ImportView() {
     ],
     required: true,
   };
+  const nameItem = {
+    label: '钱包名称',
+    prop: 'name',
+    required: true,
+  };
   const [isKeystoreType, setKeystoreType] = useState(true);
-  const fields = buildFields([
-    typeItem,
-    isKeystoreType ? keystoreItem : mnemonicItem,
-    passwordItem,
-  ]);
-  console.log('表单', fields);
+  const setSelectedAccount = useStoreActions(
+    actions => actions.accounts.setSelectedAccount,
+  );
+
   const form = useForm({
-    fields: fields,
+    fields: buildFields(
+      [
+        typeItem,
+        isKeystoreType ? keystoreItem : mnemonicItem,
+        isKeystoreType ? null : nameItem,
+        passwordItem,
+      ].filter(t => t),
+    ),
     initialValues: {type: 'keystore'},
-    onSubmit: values => {
-      console.log('提交', values);
+    onSubmit: async values => {
+      const {type, password, mnemonic, keystore, name} = values;
+      let pair;
+      if (type === 'keystore') {
+        try {
+          pair = keyring.restoreAccount(JSON.parse(keystore), password);
+        } catch (e) {
+          console.log('错误', e);
+          showAlert('密码不正确');
+        }
+      } else if (type === 'mnemonic') {
+        let hide = showLoading('导入中');
+        const result = await new Promise(resolve => {
+          setTimeout(
+            () => {
+              const _result = keyring.addUri(mnemonic, password, {
+                name: name.trim(),
+                tags: [],
+              });
+              resolve(_result);
+            },
+            Platform.OS === 'ios' ? 0 : 300,
+          );
+        });
+        pair = result.pair;
+        hide();
+      }
+      if (!pair) {
+        return;
+      }
+      setSelectedAccount(pair.address);
+      RouteHelper.reset('Main');
     },
   });
   useEffect(() => {
     console.log('值', form.values.type);
     setKeystoreType(form.values.type === 'keystore');
   }, [form.values.type]);
-  return <BaseForm fields={fields} {...form} />;
+  return <BaseForm {...form} />;
 }
 
 export default function AddAccount() {
   return (
     <BaseContainer title={'添加钱包'}>
-      <SegmentedView style={{flex: 1}} type="projector">
+      <SegmentedView indicatorType={'boxWidth'} style={{flex: 1}}>
         <SegmentedView.Sheet title={'创建'}>
           <BaseContainer navBar={null} useScrollView>
             <CreateView />

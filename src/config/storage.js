@@ -35,6 +35,8 @@ class Storage {
     return AsyncStorage.removeItem(key);
   };
 
+  removeItem = this.remove;
+
   saveItem = item => {
     this.dataMap.set(item[0], item[1]);
   };

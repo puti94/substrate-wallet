@@ -148,14 +148,18 @@ export default class Api extends React.PureComponent {
       (api.tx.consensus && api.tx.consensus.setCode) || // 1.x
       apiDefaultTx; // other
     const isSubstrateV2 = !!Object.keys(api.consts).length;
-    keyring.loadAll({
-      addressPrefix: ss58Format,
-      genesisHash: api.genesisHash,
-      isDevelopment,
-      ss58Format,
-      type: 'sr25519',
-      store: KeyringStore,
-    });
+    try {
+      keyring.loadAll({
+        addressPrefix: ss58Format,
+        genesisHash: api.genesisHash,
+        isDevelopment,
+        ss58Format,
+        type: 'sr25519',
+        store: KeyringStore,
+      });
+    } catch (e) {
+      console.log('keyring.loadAll', e);
+    }
     this.setState({
       apiDefaultTx,
       apiDefaultTxSudo,

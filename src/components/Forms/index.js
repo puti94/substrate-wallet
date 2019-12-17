@@ -14,6 +14,7 @@ type Props = {
   initialValues?: Object,
   fields: Array<FieldProps>,
   showSubmitButton?: boolean,
+  submitTitle?: string,
   children?: any,
   onSubmit: Function,
 };
@@ -28,6 +29,7 @@ export function BaseForm(props: Props) {
     errors,
     style,
     children,
+    submitTitle = '提交',
     showSubmitButton = true,
   } = props;
   return (
@@ -44,7 +46,7 @@ export function BaseForm(props: Props) {
       ))}
       {children}
       {showSubmitButton && (
-        <CommonButton onPress={handleSubmit} title={'submit'} />
+        <CommonButton onPress={handleSubmit} title={submitTitle} />
       )}
     </View>
   );

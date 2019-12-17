@@ -46,7 +46,7 @@ export class AlertView extends Component {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <Text style={{color: '#35384B', fontSize: 15}}>{t.text}</Text>
+                <Text style={{color: 'white', fontSize: 15}}>{t.text}</Text>
               </TouchableOpacity>
             ))}
           </View>

@@ -7,17 +7,26 @@ import BaseContainer from '../../components/BaseContainer';
 import React from 'react';
 import ListRow from '../../components/ListRow';
 import {RouteHelper} from 'react-navigation-easy-helper';
+import {useSelectedAccount} from '../../hooks';
 
 export function Settings() {
+  const account = useSelectedAccount;
   return (
-    <BaseContainer hideLeft title={'设置'}>
+    <BaseContainer hideLeft useScrollView title={'设置'}>
       <ListRow
-        icon={'FontAwesome5/network-wired'}
         title={'设置节点'}
         onPress={() => {
           RouteHelper.navigate('NodeSet');
         }}
       />
+      {!!account && (
+        <ListRow
+          title={'钱包管理'}
+          onPress={() => {
+            RouteHelper.navigate('AccountSet');
+          }}
+        />
+      )}
     </BaseContainer>
   );
 }

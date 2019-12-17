@@ -62,7 +62,7 @@ export default function AccountsDrawer({onClose}) {
 }
 
 function AccountItem({accountId, onSelected}) {
-  const {meta = {}, address} = keyring.getPair(accountId);
+  const {address} = keyring.getPair(accountId);
   const selectedAccount = useStoreState(
     state => state.accounts.selectedAccount,
   );

@@ -3,9 +3,11 @@
  * Time: 2019-11-07 15:44.
  */
 import React from 'react';
+import {Alert} from 'react-native';
 import {Overlay} from 'teaset';
 import {LoadingView} from '../components/DialogViews/LoadingView';
 import {AlertView} from '../components/DialogViews/AlertView';
+import {InputView} from '../components/DialogViews/InputView';
 
 //保存通知组件的引用
 let noticeRef;
@@ -23,6 +25,44 @@ export function alertWithType(
 ) {
   // noticeRef && noticeRef.closeAction();
   noticeRef && noticeRef.alertWithType(type, title, message, payload, interval);
+}
+
+export function showTextInput({title = '请输入', type}) {
+  return new Promise((resolve, reject) => {
+    if (Platform.OS === 'ios') {
+      Alert.prompt(
+        title,
+        null,
+        [
+          {
+            text: i18n('Base.Cancel'),
+            onPress: reject,
+            style: 'cancel',
+          },
+          {
+            text: i18n('Base.Confirm'),
+            onPress: resolve,
+          },
+        ],
+        type,
+      );
+    } else {
+      let key = Overlay.show(
+        <InputView
+          title={title}
+          type={type}
+          onSurePress={text => {
+            resolve(text);
+            Overlay.hide(key);
+          }}
+          onRestorePress={() => {
+            Overlay.hide(key);
+            reject();
+          }}
+        />,
+      );
+    }
+  });
 }
 
 export function showLoading(message = i18n('Base.Loading'), modal = false) {

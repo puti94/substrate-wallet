@@ -65,11 +65,9 @@ export const theme = {
 };
 Theme.set({
   tvBarBtnActiveTitleColor: theme.baseColor,
-  sbColor: theme.backgroundColor,
   sbBtnPaddingBottom: 8,
   sbBtnPaddingLeft: 8,
   sbBtnPaddingRight: 8,
-  sbBtnTitleColor: '#CCCCCC',
   sbBtnTextFontSize: 15,
   sbBtnActiveTitleColor: theme.baseColor,
   sbBtnActiveTextFontSize: 15,

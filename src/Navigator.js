@@ -11,6 +11,10 @@ import Main from './pages/Main';
 import QRReading from './pages/QRReading';
 import NodeSet from './pages/set/NodeSet';
 import AddAccount from './pages/accounts/AddAccount';
+import AccountSet from './pages/set/AccountSet';
+import ChangePassword from './pages/set/ChangePassword';
+import Backup from './pages/accounts/Backup';
+import ConfirmMnemonic from './pages/accounts/ConfirmMnemonic';
 
 const getAppNavigator = ({initialRouteName}) =>
   createStackNavigator(
@@ -19,6 +23,10 @@ const getAppNavigator = ({initialRouteName}) =>
       Main: {screen: Main},
       Accounts: {screen: Accounts},
       AddAccount: {screen: AddAccount},
+      ChangePassword: {screen: ChangePassword},
+      AccountSet: {screen: AccountSet},
+      Backup: {screen: Backup},
+      ConfirmMnemonic: {screen: ConfirmMnemonic},
       QRReading: {screen: QRReading},
       NodeSet: {screen: NodeSet},
     }),

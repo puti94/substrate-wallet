@@ -20,6 +20,7 @@ import BestNumber from '../../components/BestNumber';
 import RuntimeVersion from '../../components/RuntimeVersion';
 import {theme} from '../../config/theme';
 import ChainImg from '../../components/ChainImg';
+import {RouteHelper} from 'react-navigation-easy-helper';
 
 export default function Home() {
   return (
@@ -111,8 +112,14 @@ function Header() {
     <View style={styles.cardView}>
       {!selectedAccount ? (
         <>
-          <Text style={{color: 'white', fontSize: 18}}>账户未创建</Text>
-          <CommonButton onPress={() => {}} title={'前往创建'} />
+          <Text style={{color: 'white', fontSize: 18}}>账户为空</Text>
+          <CommonButton
+            icon={'addfolder'}
+            onPress={() => {
+              RouteHelper.navigate('AddAccount');
+            }}
+            title={'添加钱包'}
+          />
         </>
       ) : (
         <>

@@ -25,6 +25,11 @@ export default {
   selectedAddress: '',
   selectedAccount: null,
   setSelectedAccount: action((state, address) => {
+    if (!address) {
+      state.selectedAddress = '';
+      state.selectedAccount = null;
+      return;
+    }
     state.selectedAddress = toHex(address);
     state.selectedAccount = keyring.getPair(address);
   }),
