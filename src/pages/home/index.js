@@ -116,6 +116,9 @@ function AccountInfo() {
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Section title={'账户信息'} />
         <TouchableOpacity
+          onPress={() => {
+            RouteHelper.navigate('Transfer');
+          }}
           style={{marginTop: px2dp(30), marginRight: px2dp(40)}}>
           <Icon
             icon={'MaterialCommunityIcons/flip-to-front'}
