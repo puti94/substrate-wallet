@@ -12,10 +12,10 @@ A Portal into the Polkadot and Substrate networks. Provides a view and interacti
 - [x] Chain state模块
 
 ## Screenshots
-![](https://github.com/puti94/substrate-wallet/images/home.png)
-![](https://github.com/puti94/substrate-wallet/images/accounts.png)
-![](https://github.com/puti94/substrate-wallet/images/explorer.png)
-![](https://github.com/puti94/substrate-wallet/images/modules.png)
-![](https://github.com/puti94/substrate-wallet/images/nodeset.png)
-![](https://github.com/puti94/substrate-wallet/images/set.png)
-![](https://github.com/puti94/substrate-wallet/images/storage.png)
+![](https://github.com/puti94/substrate-wallet/blob/master/images/home.png)
+![](https://github.com/puti94/substrate-wallet/blob/master/images/accounts.png)
+![](https://github.com/puti94/substrate-wallet/blob/master/images/explorer.png)
+![](https://github.com/puti94/substrate-wallet/blob/master/images/modules.png)
+![](https://github.com/puti94/substrate-wallet/blob/master/images/nodeset.png)
+![](https://github.com/puti94/substrate-wallet/blob/master/images/set.png)
+![](https://github.com/puti94/substrate-wallet/blob/master/images/storage.png)
