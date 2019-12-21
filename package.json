@@ -22,6 +22,7 @@
     "node-libs-react-native": "^1.0.3",
     "react": "16.9.0",
     "react-native": "0.61.5",
+    "react-native-actionsheet": "^2.4.2",
     "react-native-device-info": "^5.4.0",
     "react-native-dropdownalert": "^4.2.0",
     "react-native-gesture-handler": "^1.5.2",
@@ -44,6 +45,7 @@
     "react-navigation-easy-helper": "^1.2.2",
     "react-navigation-stack": "^1.10.3",
     "teaset": "^0.7.1",
+    "uuid": "^3.3.3",
     "vm-browserify": "^1.1.2"
   },
   "devDependencies": {

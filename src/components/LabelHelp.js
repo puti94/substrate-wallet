@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, {useState} from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 
 import Icon from './Icon';
 
@@ -13,7 +13,7 @@ function LabelHelp({help, style}: Props): React.ReactElement<Props> {
   const _toggleTooltip = (): void => setIsTooltipOpen(!isTooltipOpen);
 
   return (
-    <div style={style}>
+    <View style={style}>
       <TouchableOpacity onPress={_toggleTooltip}>
         <Icon icon={'help'} size={px2dp(30)} />
       </TouchableOpacity>
@@ -23,7 +23,7 @@ function LabelHelp({help, style}: Props): React.ReactElement<Props> {
       {/*    trigger='controlled-trigger'*/}
       {/*  />*/}
       {/*)}*/}
-    </div>
+    </View>
   );
 }
 

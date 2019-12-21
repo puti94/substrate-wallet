@@ -11,7 +11,24 @@ import {InputView} from '../components/DialogViews/InputView';
 
 //保存通知组件的引用
 let noticeRef;
+let actionSheetRef;
 
+export function setActionSheetRef(ref) {
+  actionSheetRef = ref;
+}
+
+type ActionSheetParams = {
+  title: string,
+  message: string,
+  cancelButtonIndex: number,
+  options: Array<string>,
+  destructiveButtonIndex: number,
+  onPress: number => void,
+};
+
+export function showActionSheet(params: ActionSheetParams) {
+  actionSheetRef && actionSheetRef.show(params);
+}
 export function setNoticeRef(ref) {
   noticeRef = ref;
 }

@@ -21,7 +21,9 @@ import RuntimeVersion from '../../components/RuntimeVersion';
 import {theme} from '../../config/theme';
 import ChainImg from '../../components/ChainImg';
 import {RouteHelper} from 'react-navigation-easy-helper';
-import BalanceText from '../../components/BalanceText';
+import {STORE_ACCOUNT_SELECTED} from '../../config';
+import Available from '../../components/query/Available';
+import AddressInfo from '../../components/AddressInfo';
 
 export default function Home() {
   return (
@@ -47,6 +49,7 @@ export default function Home() {
       useScrollView>
       <Header />
       <ChainInfo />
+      <AccountInfo />
     </BaseContainer>
   );
 }
@@ -62,6 +65,7 @@ function Section({title, style}) {
           marginTop: px2dp(40),
           marginBottom: px2dp(20),
           marginLeft: px2dp(25),
+          flex: 1,
         },
         style,
       ]}>
@@ -100,6 +104,40 @@ function ChainInfo() {
   );
 }
 
+function AccountInfo() {
+  const selectedAccount = useStoreState(
+    state => state.accounts.selectedAccount,
+  );
+  if (!selectedAccount) {
+    return null;
+  }
+  return (
+    <View>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Section title={'账户信息'} />
+        <TouchableOpacity
+          style={{marginTop: px2dp(30), marginRight: px2dp(40)}}>
+          <Icon
+            icon={'MaterialCommunityIcons/flip-to-front'}
+            size={px2dp(50)}
+          />
+        </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          marginTop: px2dp(30),
+          alignItems: 'center',
+          marginLeft: px2dp(25),
+        }}>
+        <View style={{marginLeft: px2dp(20)}}>
+          <AddressInfo address={selectedAccount.address} />
+        </View>
+      </View>
+    </View>
+  );
+}
+
 function Header() {
   const allAccounts = useAccounts();
   const selectedAccount = useStoreState(
@@ -109,7 +147,8 @@ function Header() {
     actions => actions.accounts.setSelectedAccount,
   );
   if (allAccounts.length !== 0 && !selectedAccount) {
-    setSelectedAccount(allAccounts[0]);
+    const address = localStorage.getItem(STORE_ACCOUNT_SELECTED);
+    setSelectedAccount(address || allAccounts[0]);
   }
   return (
     <View style={styles.cardView}>
@@ -160,7 +199,7 @@ function Header() {
           </View>
           <View style={{marginTop: px2dp(20), flex: 1, flexDirection: 'row'}}>
             <View style={{flex: 1, flexDirection: 'row'}}>
-              <BalanceText
+              <Available
                 style={{
                   alignSelf: 'flex-end',
                   color: 'white',
@@ -168,7 +207,7 @@ function Header() {
                   fontSize: 22,
                   marginLeft: px2dp(30),
                 }}
-                address={selectedAccount.address}
+                params={selectedAccount.address}
               />
             </View>
             <TouchableOpacity

@@ -15,9 +15,12 @@ import getNavigator from './src/Navigator';
 import Api from './src/react-api/Api';
 import {setJSExceptionHandler} from './src/utils/errorHandle';
 import {TopView} from 'teaset';
-import {setNoticeRef} from './src/utils/dialog';
+import {setActionSheetRef, setNoticeRef} from './src/utils/dialog';
 import {BlockAuthors} from './src/components/query/BlockAuthors';
 import {Events} from './src/components/query/Events';
+import {ENDPOINT_DEFAULT} from './src/config/endpoints';
+import {STORE_SETTING_ENDPOINT} from './src/config';
+import ActionSheet from './src/components/ActionSheet';
 setJSExceptionHandler(() => {}, true);
 const App = () => {
   const [appReady, setAppReady] = useState(false);
@@ -25,6 +28,7 @@ const App = () => {
     //初始化一些配置
     async function initData() {
       await localStorage.init();
+      store.getActions().set.initData();
       setAppReady(true);
       SplashScreen.hide();
     }
@@ -39,7 +43,9 @@ const App = () => {
   });
   return (
     <StoreProvider store={store}>
-      <Api>
+      <Api
+        onUrlChange={url => localStorage.setItem(STORE_SETTING_ENDPOINT, url)}
+        url={localStorage.getItem(STORE_SETTING_ENDPOINT) || ENDPOINT_DEFAULT}>
         <BlockAuthors>
           <Events>
             <TopView>
@@ -49,6 +55,7 @@ const App = () => {
                 updateStatusBar={false}
                 ref={ref => setNoticeRef(ref)}
               />
+              <ActionSheet ref={setActionSheetRef} />
             </TopView>
           </Events>
         </BlockAuthors>

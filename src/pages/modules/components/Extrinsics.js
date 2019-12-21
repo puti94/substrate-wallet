@@ -76,7 +76,6 @@ function RenderExtrinsic({props, extrinsic, index, registry}) {
 export default function Extrinsics(props) {
   const {value} = props;
   const {api} = useApi();
-  console.log('Extrinsics', value);
   return (
     <View>
       {!!value &&
@@ -96,6 +95,11 @@ export default function Extrinsics(props) {
             return <Text>{'Unable to render extrinsic'}</Text>;
           }
         })}
+      {!!value && value.length === 0 && (
+        <View style={baseStyles.cardItem}>
+          <Text>{'No pending extrinsics are in the queue'}</Text>
+        </View>
+      )}
     </View>
   );
 }

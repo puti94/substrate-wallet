@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React from 'react';
-import {View, Text} from 'react-native';
+import {Text} from 'react-native';
 import Icon from './Icon';
 import {useApi} from '../hooks';
 import {RouteHelper} from 'react-navigation-easy-helper';

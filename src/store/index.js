@@ -4,6 +4,8 @@
  */
 import {createStore} from 'easy-peasy';
 import accounts from './accounts';
+import set from './set';
 export const store = createStore({
   accounts,
+  set,
 });

@@ -2,7 +2,7 @@
  * User: puti.
  * Time: 2019-12-13 11:01.
  */
-import React, {useState, useRef, Component} from 'react';
+import React, {Component} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {theme} from '../../config/theme';
 import Input from './Inputs/Input';

@@ -5,7 +5,8 @@
 import {FieldProps} from '../FormItem';
 import {showDecodeAddressQR} from '../../../utils/base';
 import {isAddress} from '../../../utils';
-import {TYPE_ADDRESS} from '../types';
+import {TYPE_ADDRESS, TYPE_ADDRESS_WITHBOOK} from '../types';
+import {RouteHelper} from 'react-navigation-easy-helper';
 ///地址类型的默认参数
 const ADDRESS_PROPS: FieldProps = {
   rightIcon: 'scan1',
@@ -15,8 +16,19 @@ const ADDRESS_PROPS: FieldProps = {
     handleChange(res.address);
   },
 };
+const ADDRESS_PROPS_WITH_BOOK: FieldProps = {
+  rightIcon: 'FontAwesome/address-book',
+  validate: [{verify: isAddress, message: '钱包地址不正确'}],
+  rightPress: handleChange => {
+    RouteHelper.navigate('AddressBook', {
+      withAccount: true,
+      onSelected: handleChange,
+    });
+  },
+};
 const DEFAULT_PROPS = {
   [TYPE_ADDRESS]: ADDRESS_PROPS,
+  [TYPE_ADDRESS_WITHBOOK]: ADDRESS_PROPS_WITH_BOOK,
 };
 
 export default function buildProps(props) {

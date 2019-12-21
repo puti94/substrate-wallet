@@ -19,7 +19,7 @@ function Main() {
         type="projector"
         barStyle={{backgroundColor: theme.navigationColor}}>
         <TabView.Sheet
-          title={'首页'}
+          title={i18n('Main.Home')}
           icon={
             <Icon
               icon={'MaterialCommunityIcons/home-circle'}
@@ -36,7 +36,7 @@ function Main() {
           <Home />
         </TabView.Sheet>
         <TabView.Sheet
-          title={'模块'}
+          title={i18n('Main.Module')}
           icon={<Icon icon={'appstore1'} size={px2dp(40)} />}
           activeIcon={
             <Icon icon={'appstore1'} size={px2dp(40)} color={theme.baseColor} />
@@ -44,7 +44,7 @@ function Main() {
           <Modules />
         </TabView.Sheet>
         <TabView.Sheet
-          title={'设置'}
+          title={i18n('Main.Set')}
           icon={<Icon icon={'setting'} size={px2dp(40)} />}
           activeIcon={
             <Icon icon={'setting'} size={px2dp(40)} color={theme.baseColor} />

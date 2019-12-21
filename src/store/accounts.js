@@ -8,6 +8,7 @@ import {toHex} from '../utils/defaults';
 import {alertWithType, showAlert, showTextInput} from '../utils/dialog';
 import {api} from '../react-api';
 import {isFunction} from '@polkadot/util';
+import {STORE_ACCOUNT_SELECTED} from '../config';
 
 export default {
   queue: [],
@@ -20,6 +21,7 @@ export default {
       return;
     }
     state.selectedAddress = toHex(address);
+    localStorage.setItem(STORE_ACCOUNT_SELECTED, address);
     state.selectedAccount = keyring.getPair(address);
   }),
   send: thunk(async (actions, params, helpers) => {

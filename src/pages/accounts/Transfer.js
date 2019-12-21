@@ -9,8 +9,8 @@ import {
   buildFields,
   useForm,
   BaseForm,
-  TYPE_ADDRESS,
   TYPE_NUMBER,
+  TYPE_ADDRESS_WITHBOOK,
 } from '../../components/Forms';
 import {showDecodeAddressQR} from '../../utils/base';
 import FeesText from '../../components/FeesText';
@@ -33,7 +33,7 @@ export default function Transfer({receipt, amount}) {
       {
         label: '收款地址',
         prop: 'receipt',
-        type: TYPE_ADDRESS,
+        type: TYPE_ADDRESS_WITHBOOK,
         required: true,
       },
       {

@@ -3,7 +3,7 @@
  * Time: 2019-12-17 19:40.
  */
 import BaseContainer from '../../../components/BaseContainer';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text} from 'react-native';
 import TimeNow from '../../../components/query/TimeNow';
 import TimePeriod from '../../../components/query/TimePeriod';

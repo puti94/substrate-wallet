@@ -24,6 +24,8 @@ import Toolbox from './pages/modules/Toolbox';
 import ChainState from './pages/modules/ChainState';
 import Explorer from './pages/modules/explorer';
 import BlockDetail from './pages/modules/explorer/BlockDetail';
+import AddressBook from './pages/set/addressBook';
+import AddAddress from './pages/set/addressBook/AddBook';
 
 const getAppNavigator = ({initialRouteName}) =>
   createStackNavigator(
@@ -43,13 +45,15 @@ const getAppNavigator = ({initialRouteName}) =>
       AboutUs: {screen: AboutUs},
       Web: {screen: WebPage},
       Transfer: {screen: Transfer},
+      AddressBook: {screen: AddressBook},
       QRReading: {screen: QRReading},
       Explorer: {screen: Explorer},
       BlockDetail: {screen: BlockDetail},
+      AddAddress: {screen: AddAddress},
       NodeSet: {screen: NodeSet},
     }),
     {
-      initialRouteName: 'BlockDetail' || initialRouteName,
+      initialRouteName: initialRouteName,
       defaultNavigationOptions: {header: null},
     },
   );

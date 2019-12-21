@@ -16,14 +16,13 @@ function Events({children}) {
   const [state, setState] = useState([]);
 
   useEffect((): void => {
-    // TODO We should really unsub - but since this should just be used once,
-    // atm I'm rather typing this than doing it the way it is supposed to be
+    let subscriber;
     api.isReady.then(
       (): void => {
         const prevEventHash = '';
         let events = [];
 
-        api.query.system.events(
+        subscriber = api.query.system.events(
           (records): void => {
             const newEvents = records
               .filter(({event}): boolean => event.section !== 'system')
@@ -43,7 +42,12 @@ function Events({children}) {
         );
       },
     );
-  }, []);
+    return () => {
+      if (subscriber) {
+        subscriber.then(unsub => unsub());
+      }
+    };
+  }, [api]);
 
   return (
     <EventsContext.Provider value={state}>{children}</EventsContext.Provider>

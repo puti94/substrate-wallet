@@ -11,8 +11,6 @@ import typesSpec from './overrides/spec';
 import addressDefaults from '@polkadot/util-crypto/address/defaults';
 import keyring from '@polkadot/ui-keyring';
 import KeyringStore from '../utils/KeyringStore';
-import {ENDPOINT_DEFAULT} from '../config/endpoints';
-import {STORE_SETTING_ENDPOINT} from '../config';
 
 const DEFAULT_DECIMALS = 12;
 const DEFAULT_SS58 = addressDefaults.prefix;
@@ -21,19 +19,23 @@ let api, node;
 
 export {api, node};
 
-export default class Api extends React.PureComponent {
+type Prop = {
+  url: string,
+  onUrlChange?: Function,
+  onKeyringInit?: Function,
+};
+export default class Api extends React.PureComponent<Prop> {
   state = {};
 
   constructor(props) {
     super(props);
-    const url =
-      localStorage.getItem(STORE_SETTING_ENDPOINT) || ENDPOINT_DEFAULT;
+    const url = props.url;
     const provider = new WsProvider(url);
 
     const setApi = async provider => {
       api = this.createApi(provider);
       node = provider.endpoint;
-      localStorage.setItem(STORE_SETTING_ENDPOINT, provider.endpoint);
+      props.onUrlChange && props.onUrlChange(provider.endpoint);
       this.unsubscribeEvents();
       this.setState(
         {api, endpoint: provider.endpoint, isApiReady: false},
@@ -157,6 +159,7 @@ export default class Api extends React.PureComponent {
         type: 'sr25519',
         store: KeyringStore,
       });
+      this.props.onKeyringInit && this.props.onKeyringInit();
     } catch (e) {
       console.log('keyring.loadAll', e);
     }

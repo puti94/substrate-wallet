@@ -17,14 +17,13 @@ const BlockAuthorsContext: React.Context = React.createContext({
 const ValidatorsContext: React.Context = React.createContext([]);
 
 function BlockAuthors({children}) {
-  const {api, isApiReady} = useApi();
+  const {api} = useApi();
   const [state, setState] = useState({byAuthor, lastHeaders: []});
   const [validators, setValidators] = useState([]);
 
   useEffect((): void => {
-    // TODO We should really unsub - but since this should just be used once,
-    // atm I'm rather typing this than doing it the way it is supposed to be
-    if (isApiReady) {
+    let subscriber;
+    api.isReady.then(() => {
       let lastHeaders = [];
       let lastBlockAuthors = [];
       let lastBlockNumber = '';
@@ -40,7 +39,7 @@ function BlockAuthors({children}) {
         );
 
       // subscribe to new headers
-      api.derive.chain.subscribeNewHeads(lastHeader => {
+      subscriber = api.derive.chain.subscribeNewHeads(lastHeader => {
         if (lastHeader && lastHeader.number) {
           const blockNumber = lastHeader.number.unwrap();
           const thisBlockAuthor = lastHeader.author?.toString();
@@ -81,8 +80,13 @@ function BlockAuthors({children}) {
           });
         }
       });
-    }
-  }, [isApiReady]);
+    });
+    return () => {
+      if (subscriber) {
+        subscriber.then(unsub => unsub());
+      }
+    };
+  }, [api]);
 
   return (
     <ValidatorsContext.Provider value={validators}>

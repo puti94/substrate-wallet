@@ -14,8 +14,8 @@ export default class NumberInput extends Input {
   }
 
   onChange = value => {
-    const {handleChange} = this.props;
-    handleChange(`${this.normalizeCurrency(value)}`);
+    const {onChangeText} = this.props;
+    onChangeText(`${this.normalizeCurrency(value)}`);
   };
 
   normalizeCurrency(value) {

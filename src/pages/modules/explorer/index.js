@@ -6,6 +6,7 @@ import BaseContainer from '../../../components/BaseContainer';
 import React from 'react';
 import {SegmentedView} from 'teaset';
 import ChainInfo from './ChainInfo';
+import NodeInfo from './NodeInfo';
 
 export default function Explorer() {
   return (
@@ -17,8 +18,9 @@ export default function Explorer() {
         <SegmentedView.Sheet title={'Chain info'}>
           <ChainInfo />
         </SegmentedView.Sheet>
-        <SegmentedView.Sheet title={'Hash data'} />
-        <SegmentedView.Sheet title={'Sign message'} />
+        <SegmentedView.Sheet title={'Node info'}>
+          <NodeInfo />
+        </SegmentedView.Sheet>
       </SegmentedView>
     </BaseContainer>
   );
