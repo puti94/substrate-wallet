@@ -12,10 +12,40 @@ A Portal into the Polkadot and Substrate networks. Provides a view and interacti
 - [x] Chain state模块
 
 ## Screenshots
-![](https://github.com/puti94/substrate-wallet/blob/master/images/home.png)
-![](https://github.com/puti94/substrate-wallet/blob/master/images/accounts.png)
-![](https://github.com/puti94/substrate-wallet/blob/master/images/explorer.png)
-![](https://github.com/puti94/substrate-wallet/blob/master/images/modules.png)
-![](https://github.com/puti94/substrate-wallet/blob/master/images/nodeset.png)
-![](https://github.com/puti94/substrate-wallet/blob/master/images/set.png)
-![](https://github.com/puti94/substrate-wallet/blob/master/images/storage.png)
+
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top">
+        <img width="210" src="./images/home.png">
+      </td>
+      <td align="center" valign="top">
+        <img width="210" src="./images/accounts.png">
+      </td>
+      <td align="center" valign="top">
+        <img width="210" src="./images/explorer.png">
+      </td>
+    </tr>
+  </tbody>
+  <tbody>
+      <tr>
+        <td align="center" valign="top">
+          <img width="210" src="./images/modules.png">
+        </td>
+        <td align="center" valign="top">
+          <img width="210" src="./images/nodeset.png">
+        </td>
+        <td align="center" valign="top">
+          <img width="210" src="./images/set.png">
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+          <tr>
+            <td align="center" valign="top">
+              <img width="210" src="./images/storage.png">
+            </td>
+          </tr>
+        </tbody>
+</table>
