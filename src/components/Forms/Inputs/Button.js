@@ -14,7 +14,6 @@ export type Props = {
 };
 export default class Button<T> extends Component<T & Props> {
   focus() {
-    console.log('focus');
     const {onFocus} = this.props;
     onFocus && onFocus();
     this.click();

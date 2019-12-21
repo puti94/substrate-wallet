@@ -2,7 +2,7 @@
  * User: puti.
  * Time: 2019-12-13 11:01.
  */
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, Component} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {theme} from '../../config/theme';
 import Input from './Inputs/Input';
@@ -56,91 +56,98 @@ const mapTypeToComponent = type => {
   }
 };
 
-const FormItem = (props: FieldProps) => {
-  const {
-    label,
-    prop,
-    onBlur,
-    onFocus,
-    style,
-    type,
-    hint,
-    error,
-    rightIcon,
-    handleChange,
-    rightPress,
-    inputStyle,
-    ...otherProps
-  } = props;
-  const [isFocus, setFocus] = useState(false);
-  const inputRef = useRef(null);
-  const InputComponent = mapTypeToComponent(type);
-  return (
-    <TouchableOpacity
-      onPress={() => {
-        inputRef.current.click && inputRef.current.click();
-      }}
-      activeOpacity={1}>
-      <View
-        style={[
-          styles.container,
-          {
-            borderColor: error
-              ? theme.danger
-              : isFocus
-              ? theme.baseColor
-              : '#999',
-          },
-          style,
-        ]}>
-        <View style={styles.topContainer}>
-          <Text style={styles.title}>{label}</Text>
-          {!!hint && (
-            <Text style={styles.hint}>
-              {typeof hint === 'function' ? hint() : hint}
-            </Text>
-          )}
-        </View>
-        <View style={styles.content}>
-          <InputComponent
-            ref={inputRef}
-            onChangeText={handleChange}
-            handleChange={handleChange}
-            label={label}
-            {...otherProps}
-            stype={inputStyle}
-            onBlur={() => {
-              setFocus(false);
-              onBlur && onBlur(prop);
-            }}
-            onFocus={() => {
-              setFocus(true);
-              onFocus && onFocus(prop);
-            }}
-          />
-          {!!rightIcon && (
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => {
-                rightPress && rightPress(handleChange);
-              }}>
-              <Icon icon={rightIcon} size={px2dp(40)} />
-            </TouchableOpacity>
-          )}
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            height: error ? px2dp(40) : 0,
-          }}>
-          {!!error && <Text style={styles.errorText}>{error}</Text>}
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
+export default class FormItem extends Component<FieldProps> {
+  state = {
+    isFocus: false,
+  };
 
-export default FormItem;
+  focus = () => {
+    this.input.focus && this.input.focus();
+  };
+
+  render() {
+    const {
+      label,
+      prop,
+      onBlur,
+      onFocus,
+      style,
+      type,
+      hint,
+      error,
+      rightIcon,
+      handleChange,
+      rightPress,
+      inputStyle,
+      ...otherProps
+    } = this.props;
+    const InputComponent = mapTypeToComponent(type);
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          this.input.click && this.input.click();
+        }}
+        activeOpacity={1}>
+        <View
+          style={[
+            styles.container,
+            {
+              borderColor: error
+                ? theme.danger
+                : this.state.isFocus
+                ? theme.baseColor
+                : '#999',
+            },
+            style,
+          ]}>
+          <View style={styles.topContainer}>
+            <Text style={styles.title}>{label}</Text>
+            {!!hint && (
+              <Text style={styles.hint}>
+                {typeof hint === 'function' ? hint() : hint}
+              </Text>
+            )}
+          </View>
+          <View style={styles.content}>
+            <InputComponent
+              ref={input => (this.input = input)}
+              onChangeText={handleChange}
+              label={label}
+              {...otherProps}
+              stype={inputStyle}
+              onBlur={() => {
+                this.setState({isFocus: false});
+                try {
+                  onBlur && onBlur(prop);
+                } catch (e) {}
+              }}
+              onFocus={() => {
+                this.setState({isFocus: true});
+                onFocus && onFocus(prop);
+              }}
+            />
+            {!!rightIcon && (
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => {
+                  rightPress && rightPress(handleChange);
+                }}>
+                <Icon icon={rightIcon} size={px2dp(40)} />
+              </TouchableOpacity>
+            )}
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              height: error ? px2dp(40) : 0,
+            }}>
+            {!!error && <Text style={styles.errorText}>{error}</Text>}
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {

@@ -16,7 +16,8 @@ import Api from './src/react-api/Api';
 import {setJSExceptionHandler} from './src/utils/errorHandle';
 import {TopView} from 'teaset';
 import {setNoticeRef} from './src/utils/dialog';
-
+import {BlockAuthors} from './src/components/query/BlockAuthors';
+import {Events} from './src/components/query/Events';
 setJSExceptionHandler(() => {}, true);
 const App = () => {
   const [appReady, setAppReady] = useState(false);
@@ -39,14 +40,18 @@ const App = () => {
   return (
     <StoreProvider store={store}>
       <Api>
-        <TopView>
-          <Navigator />
-          <DropdownAlert
-            closeInterval={2000}
-            updateStatusBar={false}
-            ref={ref => setNoticeRef(ref)}
-          />
-        </TopView>
+        <BlockAuthors>
+          <Events>
+            <TopView>
+              <Navigator />
+              <DropdownAlert
+                closeInterval={2000}
+                updateStatusBar={false}
+                ref={ref => setNoticeRef(ref)}
+              />
+            </TopView>
+          </Events>
+        </BlockAuthors>
       </Api>
     </StoreProvider>
   );

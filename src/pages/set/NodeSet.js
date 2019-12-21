@@ -30,7 +30,8 @@ export default function NodeSet() {
     try {
       await checkNodeConnect(node);
     } catch (e) {
-      Toast.fail('Not Connect');
+      Toast.fail('Connect fail');
+      hide();
       return;
     }
     await setApiUrl(node);

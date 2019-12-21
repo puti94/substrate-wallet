@@ -63,6 +63,24 @@ export const theme = {
     return 0;
   },
 };
+
+export const baseStyles = StyleSheet.create({
+  cardItem: {
+    backgroundColor: 'white',
+    padding: px2dp(30),
+    marginTop: px2dp(10),
+    borderRadius: px2dp(10),
+  },
+  paramsItem: {
+    padding: px2dp(10),
+    borderWidth: 1,
+    borderColor: theme.borderColor,
+    marginTop: px2dp(10),
+    borderStyle: 'dotted',
+    borderRadius: px2dp(10),
+  },
+});
+
 Theme.set({
   tvBarBtnActiveTitleColor: theme.baseColor,
   sbBtnPaddingBottom: 8,

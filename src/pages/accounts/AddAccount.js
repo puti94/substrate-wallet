@@ -43,6 +43,7 @@ function CreateView() {
         prop: 'repeatPassword',
         type: TYPE_PASSWORD,
         label: '重复密码',
+        required: true,
         validate: [
           {
             verify: (value, values) => value === values.password,

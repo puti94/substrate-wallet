@@ -36,17 +36,15 @@ const initI18nConfig = () => {
   I18nManager.forceRTL(isRTL);
 
   // set i18n-js config
-  i18n.translations = {[languageTag]: translationGetters[languageTag]};
+  i18n.translations = translationGetters;
+  i18n.defaultLocale = 'zh';
   i18n.locale = languageTag;
   i18n.fallbacks = true;
-  i18n.locales.no = ['zh'];
-  i18n.missingTranslationPrefix = 'EE: ';
   return languageTag;
 };
 export const DEFAULT_LANG = initI18nConfig();
 export const setI18nConfig = (languageTag = DEFAULT_LANG) => {
   // translate.cache.clear();
   i18n.locale = languageTag;
-  i18n.translations = {[languageTag]: translationGetters[languageTag]};
   localStorage.setItem(CONS.STORE_SETTING_LANG, languageTag);
 };

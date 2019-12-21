@@ -25,19 +25,21 @@ export default class Select extends Button<Props> {
   }
 
   getLabelValue(items: Items, label) {
-    return items[
-      items.findIndex(
-        item => (typeof item === 'string' ? item : item.label) === label,
-      )
-    ].value;
+    let item =
+      items[
+        items.findIndex(
+          item => (typeof item === 'string' ? item : item.label) === label,
+        )
+      ];
+    return typeof item === 'string' ? item : item.value;
   }
 
   getValueLabel(items: Items, value) {
-    return items[
-      items.findIndex(
-        item => (typeof item === 'string' ? item : item.value) === value,
-      )
-    ].label;
+    let item =
+      items[
+        items.findIndex(t => (typeof t === 'string' ? t : t.value) === value)
+      ];
+    return typeof item === 'string' ? item : item.label;
   }
 
   getShowValue(value) {
@@ -59,7 +61,8 @@ export default class Select extends Button<Props> {
         this.getIndex(items, value),
         item => {
           key = null;
-          onChangeText && onChangeText(this.getLabelValue(items, item));
+          let labelValue = this.getLabelValue(items, item);
+          onChangeText && onChangeText(labelValue);
           resolve();
         },
       );

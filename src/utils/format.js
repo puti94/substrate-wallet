@@ -5,7 +5,7 @@
 import {formatBalance as _formatBalance} from '@polkadot/util';
 import BN from 'bn.js';
 
-export function formatBalance(value = 0): string {
+export function formatBalance(value = 0, showUnit = true): string {
   let {unit, decimals} = _formatBalance.getDefaults();
   if (typeof value === 'undefined') {
     return `--- ${unit}`;
@@ -14,6 +14,9 @@ export function formatBalance(value = 0): string {
   let s = new BN(`${value}`).toString().padStart(decimals + 1, '0');
   const b = s.substr(0, s.length - decimals);
   const a = s.substr(s.length - decimals, 3);
+  if (!showUnit) {
+    return `${b}.${a}`;
+  }
   return `${b}.${a} ${unit}`;
 }
 

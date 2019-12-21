@@ -5,9 +5,7 @@
 import React, {useState} from 'react';
 import BaseContainer from '../../../components/BaseContainer';
 import {Overlay} from 'teaset';
-import {
-  mapInputType,
-} from '../../../utils/convert';
+import {mapInputType} from '../../../utils/convert';
 import {
   buildFields,
   useForm,
@@ -158,8 +156,8 @@ export default function Calls({
       {callList
         .slice()
         .sort((a, b) => b.time - a.time)
-        .map(t => (
-          <WithCallResult section={type} {...t} />
+        .map((t, i) => (
+          <WithCallResult key={i} section={type} {...t} />
         ))}
     </BaseContainer>
   );

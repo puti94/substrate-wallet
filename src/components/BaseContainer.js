@@ -9,6 +9,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useApi} from '../hooks';
 import LoadingView from './LoadingView';
 import ErrorView from './ErrorView';
+import {RouteHelper} from 'react-navigation-easy-helper';
 
 type Props = {
   fitIPhoneX?: boolean,
@@ -44,12 +45,19 @@ function Content(props) {
     fitIPhoneX,
   } = props;
   if (useApiStatus) {
-    console.log('isApiReady', isApiReady);
+    if (isApiConnectedError) {
+      return (
+        <ErrorView
+          errorText={'连接失败'}
+          btnTitle={'切换节点'}
+          onPress={() => {
+            RouteHelper.navigate('NodeSet');
+          }}
+        />
+      );
+    }
     if (!isApiReady) {
       return <LoadingView title={'连接中'} />;
-    }
-    if (isApiConnectedError) {
-      return <ErrorView errorText={'连接失败'} btnTitle={'切换节点'} />;
     }
   }
   const Contain = useScrollView ? KeyboardAwareScrollView : View;

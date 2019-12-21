@@ -72,7 +72,7 @@ export default class Api extends React.PureComponent {
   };
   disconnectedHandler = () => {
     console.log('节点disconnected');
-    this.setState({isApiConnected: false, isApiConnectedError: true});
+    this.setState({isApiConnected: false});
   };
 
   readyHandler = async () => {

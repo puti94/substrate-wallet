@@ -8,11 +8,11 @@ import RouteItem from './components/RouteItem';
 
 export default function Modules() {
   return (
-    <BaseContainer hideLeft title={'模块'}>
+    <BaseContainer hideLeft useScrollView title={'模块'}>
       <RouteItem
         icon={'FontAwesome5/internet-explorer'}
         title={'Explorer'}
-        routeName={''}
+        routeName={'Explorer'}
       />
       <RouteItem
         icon={'FontAwesome5/hammer'}
