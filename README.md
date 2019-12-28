@@ -10,6 +10,7 @@ A Portal into the Polkadot and Substrate networks. Provides a view and interacti
 - [x] explorer模块
 - [x] Toolbox模块
 - [x] Chain state模块
+- [x] Extrinsic模块
 
 ## Screenshots
 
