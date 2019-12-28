@@ -55,7 +55,7 @@ export class InputView extends Component<{
           <Text
             style={{
               lineHeight: px2dp(40),
-              fontSize: fontSize(30),
+              fontSize: 15,
               marginBottom: px2dp(35),
               color: '#35384B',
               textAlign: 'center',
@@ -66,15 +66,16 @@ export class InputView extends Component<{
             style={{
               backgroundColor: '#eee',
               height: px2dp(80),
+              width: '100%',
               borderBottomWidth: 0,
-              marginHorizontal: px2dp(0),
+              marginBottom: px2dp(20),
             }}>
             <InputView
               style={{color: '#35384B', flex: 1}}
               autoFocus
               onChangeText={text => this.setState({text: text})}
               value={this.state.text}
-              placeholder={''}
+              placeholder={'请输入密码'}
             />
           </View>
           <View
@@ -87,7 +88,7 @@ export class InputView extends Component<{
             <TouchableOpacity
               style={styles.btnContainer}
               onPress={onRestorePress}>
-              <Text style={{fontSize: fontSize(30), color: 'white'}}>
+              <Text style={{fontSize: 15, color: 'white'}}>
                 {i18n('Base.Cancel')}
               </Text>
             </TouchableOpacity>
@@ -96,7 +97,7 @@ export class InputView extends Component<{
               onPress={() => {
                 onSurePress(this.state.text);
               }}>
-              <Text style={{fontSize: fontSize(30), color: '#35384B'}}>
+              <Text style={{fontSize: 15, color: '#35384B'}}>
                 {i18n('Base.Confirm')}
               </Text>
             </TouchableOpacity>

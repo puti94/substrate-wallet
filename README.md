@@ -1,6 +1,7 @@
 # substrate/polkadot 钱包 react-native实现
 参考网页端开发    
-[https://github.com/polkadot-js/apps](https://github.com/polkadot-js/apps)    
+[https://github.com/polkadot-js/apps](https://github.com/polkadot-js/apps)     
+安卓体验地址 https://fir.im/f6vd     
 A Portal into the Polkadot and Substrate networks. Provides a view and interaction layer from a browser.
 
 ### 功能集合
@@ -11,6 +12,7 @@ A Portal into the Polkadot and Substrate networks. Provides a view and interacti
 - [x] Toolbox模块
 - [x] Chain state模块
 - [x] Extrinsic模块
+- [x] 扫描转账
 
 ## Screenshots
 
