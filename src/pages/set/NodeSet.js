@@ -18,9 +18,11 @@ export default function NodeSet() {
   const {endpoint, setApiUrl} = useApi();
   const customNodeList = useStoreState(state => state.set.customNodeList);
   const addNode = useStoreActions(actions => actions.set.addNode);
+  const removeNode = useStoreActions(actions => actions.set.removeNode);
   const customList = customNodeList.map((t, i) => ({
     title: `Custom #${i + 1}`,
     text: `Node(${t})`,
+    type: 'custom',
     value: t,
   }));
   const [node, setNode] = useState(endpoint);
@@ -57,6 +59,18 @@ export default function NodeSet() {
             setNode(t.value);
           }}
           detail={t.text}
+          swipeActions={
+            t.type === 'custom' && [
+              <ListRow.SwipeActionButton title="Cancel" />,
+              <ListRow.SwipeActionButton
+                title="Remove"
+                type="danger"
+                onPress={() => {
+                  removeNode(t.value);
+                }}
+              />,
+            ]
+          }
           accessory={
             node === t.value ? (
               <Icon
