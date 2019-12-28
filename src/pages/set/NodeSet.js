@@ -6,37 +6,37 @@ import BaseContainer from '../../components/BaseContainer';
 import React, {useState} from 'react';
 import {ENDPOINTS} from '../../config/endpoints';
 import {ListRow, Toast} from 'teaset';
-import {STORE_SETTING_CUSTOM_ENDPOINTS} from '../../config';
 import {useApi} from '../../hooks';
 import CommonButton from '../../components/CommonButton';
 import Icon from '../../components/Icon';
 import {checkNodeConnect} from '../../utils/base';
-import {showLoading} from '../../utils/dialog';
+import {showLoading, showTextInput} from '../../utils/dialog';
 import {RouteHelper} from 'react-navigation-easy-helper';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 
 export default function NodeSet() {
   const {endpoint, setApiUrl} = useApi();
-  const custom = localStorage.getItem(STORE_SETTING_CUSTOM_ENDPOINTS);
-  const customList = (custom ? JSON.parse(custom) : []).map((t, i) => ({
-    text: `Custom #${i + 1}`,
-    title: `Custom Node(${t})`,
+  const customNodeList = useStoreState(state => state.set.customNodeList);
+  const addNode = useStoreActions(actions => actions.set.addNode);
+  const customList = customNodeList.map((t, i) => ({
+    title: `Custom #${i + 1}`,
+    text: `Node(${t})`,
     value: t,
   }));
   const [node, setNode] = useState(endpoint);
-  const [list, setList] = useState(customList);
 
-  async function saveNode() {
+  async function saveNode(url) {
     const hide = showLoading('Connecting');
     try {
-      await checkNodeConnect(node);
+      await checkNodeConnect(url);
     } catch (e) {
       Toast.fail('Connect fail');
       hide();
-      return;
+      return false;
     }
-    await setApiUrl(node);
+    await setApiUrl(url);
     hide();
-    RouteHelper.reset('Main');
+    return true;
   }
 
   return (
@@ -44,8 +44,13 @@ export default function NodeSet() {
       title={'Node set'}
       useScrollView
       rightIcon={'Entypo/save'}
-      rightPress={saveNode}>
-      {[...ENDPOINTS, ...list].map(t => (
+      rightPress={async () => {
+        const res = await saveNode(node);
+        if (res) {
+          RouteHelper.reset('Main');
+        }
+      }}>
+      {[...ENDPOINTS, ...customList].map(t => (
         <ListRow
           title={t.title}
           onPress={() => {
@@ -64,7 +69,14 @@ export default function NodeSet() {
         />
       ))}
       <CommonButton
-        onPress={() => {}}
+        onPress={async () => {
+          const url = await showTextInput({title: '请输入节点'});
+          const res = await saveNode(url);
+          if (res) {
+            addNode(url);
+            RouteHelper.reset('Main');
+          }
+        }}
         icon={'Ionicons/md-add-circle-outline'}
         title={'Add Node'}
       />

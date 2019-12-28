@@ -4,6 +4,7 @@
 
 import {useEffect, useState} from 'react';
 import accountObservable from '@polkadot/ui-keyring/observable/accounts';
+import {toAddress} from '../utils/defaults';
 
 export default function useAccounts(): string[] {
   const [state, setState] = useState([]);
@@ -11,14 +12,12 @@ export default function useAccounts(): string[] {
   useEffect(() => {
     const subscription = accountObservable.subject.subscribe(accounts => {
       const allAccounts = accounts ? Object.keys(accounts) : [];
-
-      setState(allAccounts);
+      setState(Array.from(new Set(allAccounts.map(t => toAddress(t)))));
     });
 
     return () => {
       subscription.unsubscribe();
     };
   }, []);
-
   return state;
 }
