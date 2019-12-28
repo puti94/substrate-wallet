@@ -29,6 +29,7 @@ export default {
       section,
       method,
       args,
+      signer,
       txUpdateCb,
       txFailedCb,
       txSuccessCb,
@@ -38,7 +39,7 @@ export default {
     if (!state.selectedAccount) {
       return false;
     }
-    const pair = keyring.getPair(state.selectedAccount.address);
+    const pair = keyring.getPair(signer || state.selectedAccount.address);
     if (pair.isLocked) {
       const password = await showTextInput({
         title: '请输入密码',

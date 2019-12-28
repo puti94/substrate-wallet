@@ -10,7 +10,11 @@ import AddressItem from '../../../components/AddressItem';
 import {RouteHelper} from 'react-navigation-easy-helper';
 import {useAccounts} from '../../../hooks';
 
-export default function AddressBook({withAccount = false, onSelected}) {
+export default function AddressBook({
+  withAccount = false,
+  onSelected,
+  withoutAddressBook = false,
+}) {
   const {addressBookList} = useStoreState(state => state.set);
   const allAccounts = useAccounts();
   return (
@@ -38,20 +42,24 @@ export default function AddressBook({withAccount = false, onSelected}) {
           ))}
         </>
       )}
-      <Text style={styles.section}>ADDRESS</Text>
-      {addressBookList.map(t => (
-        <AddressItem
-          onPress={() => {
-            if (onSelected) {
-              onSelected(t.address);
-              RouteHelper.goBack();
-            }
-          }}
-          key={t.id}
-          address={t.address}
-          defaultName={t.name}
-        />
-      ))}
+      {!withoutAddressBook && (
+        <>
+          <Text style={styles.section}>ADDRESS</Text>
+          {addressBookList.map(t => (
+            <AddressItem
+              onPress={() => {
+                if (onSelected) {
+                  onSelected(t.address);
+                  RouteHelper.goBack();
+                }
+              }}
+              key={t.id}
+              address={t.address}
+              defaultName={t.name}
+            />
+          ))}
+        </>
+      )}
     </BaseContainer>
   );
 }

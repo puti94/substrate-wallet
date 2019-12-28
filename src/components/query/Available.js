@@ -17,6 +17,7 @@ type Props = {
 export default function Available({params, label, onChange, ...others}: Props) {
   const {api} = useApi();
   const allBalances = useCall(api.derive.balances.all, [params]);
+  console.log('Available', formatBalance(allBalances?.availableBalance));
   onChange && onChange(allBalances?.availableBalance);
   return (
     <Text {...others}>

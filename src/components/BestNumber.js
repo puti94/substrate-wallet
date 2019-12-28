@@ -15,7 +15,6 @@ type Props = {
 export default function BestNumber({children, style, label}: Props) {
   const {api} = useApi();
   const bestNumber = useCall(api.derive.chain.bestNumber, []);
-  console.log('bestNumber1', bestNumber);
   return (
     <Text style={style}>
       {label || ''}

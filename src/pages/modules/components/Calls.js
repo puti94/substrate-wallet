@@ -11,9 +11,16 @@ import {
   useForm,
   BaseForm,
   TYPE_BUTTON,
+  TYPE_ADDRESS_WITHACCOUNT,
+  TYPE_NUMBER,
 } from '../../../components/Forms';
 import {SelectView} from '../../../components/DialogViews/SelectView';
 import WithCallResult from '../../../components/WithCallResult';
+import {useStoreState} from 'easy-peasy';
+import {toAddress} from '../../../utils/defaults';
+import {useSendTx} from '../../../hooks';
+import {toBN} from '../../../utils/format';
+import AvailableText from '../../../components/AvailableText';
 
 function buildCustomFields(params) {
   return params.map(t => ({
@@ -40,7 +47,12 @@ export default function Calls({
   initialModule = 'author',
   type = 'rpc',
   initialCallIndex = 0,
+  withSigner,
 }) {
+  const selectedAddress = useStoreState(
+    state => state.accounts.selectedAddress,
+  );
+  const sendTx = useSendTx();
   const [customFields, setCustomFields] = useState(
     buildCustomFields(options[initialModule][initialCallIndex].params),
   );
@@ -54,8 +66,18 @@ export default function Calls({
     initialValues: {
       module: initialModule,
       call: options[initialModule][initialCallIndex].value,
+      signer: toAddress(selectedAddress),
     },
     fields: buildFields([
+      withSigner
+        ? {
+            prop: 'signer',
+            editable: false,
+            label: 'Using the selected account',
+            type: TYPE_ADDRESS_WITHACCOUNT,
+            hint: ({value}) => <AvailableText address={value} />,
+          }
+        : null,
       {
         prop: 'module',
         label: '选择模块',
@@ -121,26 +143,49 @@ export default function Calls({
       },
       ...customFields,
     ]),
-    onSubmit: values => {
-      console.log('参数', values);
+    onSubmit: async values => {
       const args = customFields
         .map(t => {
           if (t.type === 'form') {
             return t.items.map(v => values[t.key][v.key]);
           }
+          if (t.type === TYPE_NUMBER) {
+            return toBN(values[t.prop]).toString();
+          }
           return values[t.prop];
         })
         .filter(t => !!t);
       console.log('参数', values, args);
-      setCallList([
-        ...callList,
-        {
-          module: values.module,
-          call: values.call,
-          arg: args,
-          time: Date.now(),
-        },
-      ]);
+      if (type === 'tx' && withSigner) {
+        await sendTx({
+          section: values.module,
+          method: values.call,
+          args: args,
+          signer: values.signer,
+          txFailedCb: res => {
+            console.log('txFailedCb', res);
+          },
+          txUpdateCb: res => {
+            console.log('txUpdateCb', res);
+          },
+          txSuccessCb: res => {
+            console.log('txSuccessCb', res);
+          },
+          txStartCb: res => {
+            console.log('txSuccessCb', res);
+          },
+        });
+      } else {
+        setCallList([
+          ...callList,
+          {
+            module: values.module,
+            call: values.call,
+            arg: args,
+            time: Date.now(),
+          },
+        ]);
+      }
     },
   });
   return (

@@ -104,7 +104,7 @@ export default class FormItem extends Component<FieldProps> {
             <Text style={styles.title}>{label}</Text>
             {!!hint && (
               <Text style={styles.hint}>
-                {typeof hint === 'function' ? hint() : hint}
+                {typeof hint === 'function' ? hint(this.props) : hint}
               </Text>
             )}
           </View>

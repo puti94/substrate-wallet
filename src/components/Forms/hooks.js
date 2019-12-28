@@ -10,9 +10,11 @@ export function buildFields(
   fields: Array<FieldProps>,
   commonProps,
 ): Array<FieldProps> {
-  return fields.map(t => {
-    return buildProps(Object.assign(t, commonProps));
-  });
+  return fields
+    .filter(t => t)
+    .map(t => {
+      return buildProps(Object.assign(t, commonProps));
+    });
 }
 
 async function _validate(values, fields: Array<FieldProps>) {

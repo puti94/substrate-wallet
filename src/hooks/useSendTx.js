@@ -3,6 +3,7 @@ import {useStoreActions} from 'easy-peasy';
 export default function useSendTx(): ({
   section: string,
   method: string,
+  signer?: string,
   args: Array<any>,
   txUpdateCb?: Function,
   txFailedCb?: Function,

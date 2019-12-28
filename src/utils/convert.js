@@ -4,7 +4,12 @@
  */
 import {GenericCall} from '@polkadot/types';
 import map from '@polkadot/jsonrpc';
-import {TYPE_ADDRESS, TYPE_INPUT, TYPE_NUMBER} from '../components/Forms';
+import {
+  TYPE_ADDRESS,
+  TYPE_ADDRESS_WITHBOOK,
+  TYPE_INPUT,
+  TYPE_NUMBER,
+} from '../components/Forms';
 
 /**
  * 转化块的交易数据
@@ -210,7 +215,7 @@ export function mapInputType(interfaceType) {
     case 'AccountId':
     case 'Address':
     case 'ValidatorId':
-      return TYPE_ADDRESS;
+      return TYPE_ADDRESS_WITHBOOK;
     case 'Compact<Balance>':
       return TYPE_NUMBER;
     default:

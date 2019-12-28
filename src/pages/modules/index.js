@@ -35,7 +35,7 @@ export default function Modules() {
         icon={'FontAwesome/exchange'}
         title={'Extrinsics'}
         needsAccounts
-        routeName={''}
+        routeName={'Extrinsic'}
       />
       <RouteItem
         icon={'FontAwesome5/hammer'}
