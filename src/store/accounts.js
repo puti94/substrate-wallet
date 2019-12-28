@@ -91,6 +91,35 @@ export default {
       return false;
     }
   }),
+  sign: thunk(async (actions, params, helpers) => {
+    const {section, method, args, signer} = params;
+    let state = helpers.getState();
+    let address = signer || state.selectedAccount.address;
+    const pair = keyring.getPair(address);
+    if (pair.isLocked) {
+      const password = await showTextInput({
+        title: '请输入密码',
+        type: 'secure-text',
+      });
+      try {
+        pair.decodePkcs8(password);
+      } catch (error) {
+        showAlert('密码错误');
+        return false;
+      }
+    }
+    try {
+      let tx = api.tx[section][method];
+      let extrinsic = tx(...args);
+      const nonce = await api.query.system.accountNonce(address);
+      const sign = extrinsic.sign(pair, {nonce});
+      pair.lock();
+      return sign.toHex();
+    } catch (e) {
+      console.error('签名错误', e);
+      return false;
+    }
+  }),
   pushQueue: action((state, params) => {
     state.queue = params;
   }),

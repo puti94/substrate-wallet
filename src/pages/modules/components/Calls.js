@@ -18,7 +18,7 @@ import {SelectView} from '../../../components/DialogViews/SelectView';
 import WithCallResult from '../../../components/WithCallResult';
 import {useStoreState} from 'easy-peasy';
 import {toAddress} from '../../../utils/defaults';
-import {useSendTx} from '../../../hooks';
+import {useSignTx} from '../../../hooks';
 import {toBN} from '../../../utils/format';
 import AvailableText from '../../../components/AvailableText';
 
@@ -52,7 +52,7 @@ export default function Calls({
   const selectedAddress = useStoreState(
     state => state.accounts.selectedAddress,
   );
-  const sendTx = useSendTx();
+  const signTx = useSignTx();
   const [customFields, setCustomFields] = useState(
     buildCustomFields(options[initialModule][initialCallIndex].params),
   );
@@ -157,24 +157,25 @@ export default function Calls({
         .filter(t => !!t);
       console.log('参数', values, args);
       if (type === 'tx' && withSigner) {
-        await sendTx({
+        const message = await signTx({
           section: values.module,
           method: values.call,
           args: args,
           signer: values.signer,
-          txFailedCb: res => {
-            console.log('txFailedCb', res);
-          },
-          txUpdateCb: res => {
-            console.log('txUpdateCb', res);
-          },
-          txSuccessCb: res => {
-            console.log('txSuccessCb', res);
-          },
-          txStartCb: res => {
-            console.log('txSuccessCb', res);
-          },
         });
+        if (!message) {
+          return;
+        }
+        setCallList([
+          ...callList,
+          {
+            section: 'rpc',
+            module: 'author',
+            call: 'submitAndWatchExtrinsic',
+            arg: [message],
+            time: Date.now(),
+          },
+        ]);
       } else {
         setCallList([
           ...callList,

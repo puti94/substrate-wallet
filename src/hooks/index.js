@@ -10,6 +10,7 @@ export {default as useCall} from './useCall';
 export {default as useAccounts} from './useAccounts';
 export {default as useSelectedAccount} from './useSelectedAccount';
 export {default as useSendTx} from './useSendTx';
+export {default as useSignTx} from './useSignTx';
 
 export function useApi() {
   return useContext(ApiContext);
