@@ -14,7 +14,7 @@ import KeyringStore from '../utils/KeyringStore';
 
 const DEFAULT_DECIMALS = 12;
 const DEFAULT_SS58 = addressDefaults.prefix;
-export const register = new TypeRegistry();
+export const registry = new TypeRegistry();
 let api, node;
 
 export {api, node};
@@ -61,7 +61,7 @@ export default class Api extends React.PureComponent<Prop> {
   }
 
   createApi(provider, types) {
-    return new ApiPromise({provider, types, register, typesSpec});
+    return new ApiPromise({provider, types, registry, typesSpec});
   }
 
   componentDidMount() {

@@ -28,6 +28,7 @@ import AddressBook from './pages/set/addressBook';
 import AddAddress from './pages/set/addressBook/AddBook';
 import Extrinsic from './pages/modules/Extrinsic';
 import AddNode from './pages/set/AddNode';
+import Staking from './pages/modules/staking';
 
 const getAppNavigator = ({initialRouteName}) =>
   createStackNavigator(
@@ -51,6 +52,7 @@ const getAppNavigator = ({initialRouteName}) =>
       QRReading: {screen: QRReading},
       Explorer: {screen: Explorer},
       BlockDetail: {screen: BlockDetail},
+      Staking: {screen: Staking},
       AddAddress: {screen: AddAddress},
       Extrinsic: {screen: Extrinsic},
       NodeSet: {screen: NodeSet},

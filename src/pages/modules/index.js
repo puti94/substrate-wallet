@@ -29,7 +29,7 @@ export default function Modules() {
         icon={'FontAwesome5/sun'}
         title={'Staking'}
         needApis={['tx.staking.bond']}
-        routeName={''}
+        routeName={'Staking'}
       />
       <RouteItem
         icon={'FontAwesome/exchange'}

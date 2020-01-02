@@ -16,9 +16,10 @@ import BlockHeaders from '../components/BlockHeaders';
 import {theme} from '../../../config/theme';
 import Events from './Events';
 import {EventsContext} from '../../../components/query/Events';
+import SimpleTab from '../../../components/SimpleTab';
 
 export default function ChainInfo() {
-  const [type, setType] = useState('block');
+  const [tabIndex, setTabIndex] = useState(0);
   const events = useContext(EventsContext);
   return (
     <BaseContainer
@@ -51,33 +52,13 @@ export default function ChainInfo() {
           <BestNumber />
         </CardSummary>
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginTop: px2dp(30),
-          height: px2dp(80),
-          alignItems: 'center',
-        }}>
-        <Text
-          onPress={() => setType('block')}
-          style={{
-            fontSize: 18,
-            color: type === 'block' ? theme.title : theme.baseColor,
-          }}>
-          recent blocks
-        </Text>
-        <Text style={{fontSize: 18}}> / </Text>
-        <Text
-          onPress={() => setType('event')}
-          style={{
-            fontSize: 18,
-            color: type === 'event' ? theme.title : theme.baseColor,
-          }}>
-          recent events
-        </Text>
-      </View>
-      {type === 'block' && <BlockHeaders />}
-      {type === 'event' && <Events events={events} />}
+      <SimpleTab
+        tabs={['recent blocks', 'recent events']}
+        index={tabIndex}
+        setTabIndex={setTabIndex}
+      />
+      {tabIndex === 0 && <BlockHeaders />}
+      {tabIndex === 1 && <Events events={events} />}
     </BaseContainer>
   );
 }

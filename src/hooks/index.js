@@ -11,6 +11,8 @@ export {default as useAccounts} from './useAccounts';
 export {default as useSelectedAccount} from './useSelectedAccount';
 export {default as useSendTx} from './useSendTx';
 export {default as useSignTx} from './useSignTx';
+export {default as useCacheKey} from './useCacheKey';
+export {default as useIsMountedRef} from './useIsMountedRef';
 
 export function useApi() {
   return useContext(ApiContext);

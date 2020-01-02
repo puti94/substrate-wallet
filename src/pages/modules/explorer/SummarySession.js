@@ -65,7 +65,7 @@ function renderEra({sessionInfo, withEra = true}: Props): React.ReactNode {
 
 function SummarySession(props: Props): React.ReactElement<Props> {
   const {api} = useApi();
-  const sessionInfo = useCall(api.derive.session.info, []);
+  const sessionInfo = useCall(api.derive.session.info, [], {debug: true});
   const [expanded, setExpanded] = useState(props);
 
   useEffect((): void => {
