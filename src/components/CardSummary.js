@@ -54,7 +54,6 @@ function CardSummary({
   if (progress && isUndefined(left)) {
     return null;
   }
-  console.log('progress', progress);
   return (
     <View style={[{alignItems: 'center'}, style]}>
       <Labelled help={help} label={label}>

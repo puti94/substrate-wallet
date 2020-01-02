@@ -12,7 +12,7 @@ import SummarySession from './SummarySession';
 import BestFinalized from '../../../components/BestFinalized';
 import BestNumber from '../../../components/BestNumber';
 import CardSummary from '../../../components/CardSummary';
-import BlockHeaders from './BlockHeaders';
+import BlockHeaders from '../components/BlockHeaders';
 import {theme} from '../../../config/theme';
 import Events from './Events';
 import {EventsContext} from '../../../components/query/Events';

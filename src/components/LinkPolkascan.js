@@ -26,11 +26,7 @@ const TYPES: Record<string, string> = {
   extrinsic: '/system/extrinsic/',
 };
 
-function LinkPolkascan({
-  data,
-  type,
-  withShort,
-}: Props): React.ReactElement<Props> | null {
+function LinkPolkascan({data, type, withShort}) {
   const {systemChain} = useApi();
   const extChain = CHAINS[systemChain];
   const extType = TYPES[type];

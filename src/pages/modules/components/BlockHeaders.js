@@ -4,7 +4,6 @@
 
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {HeaderExtended} from '@polkadot/api-derive';
 import {formatNumber} from '@polkadot/util';
 import LinkPolkascan from '../../../components/LinkPolkascan';
 import {baseStyles, theme} from '../../../config/theme';
@@ -15,7 +14,7 @@ import {RouteHelper} from 'react-navigation-easy-helper';
 
 type Props = {
   isSummary?: boolean,
-  value?: HeaderExtended,
+  value?: any,
   withExplorer?: boolean,
   withLink?: boolean,
 };
@@ -25,7 +24,7 @@ const renderDetails = ({
   extrinsicsRoot,
   parentHash,
   stateRoot,
-}: HeaderExtended): React.ReactNode => {
+}): React.ReactNode => {
   const parentHex = parentHash.toHex();
 
   return (
@@ -95,7 +94,11 @@ export function BlockHeader({
                 style={{
                   color: '#4183c4',
                 }}
-                to={`/explorer/query/${hashHex}`}>
+                onPress={() => {
+                  RouteHelper.navigate('BlockDetail', {
+                    value: `${value.number}`,
+                  });
+                }}>
                 {textNumber}
               </Text>
             ) : (

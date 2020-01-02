@@ -6,7 +6,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 
 import {useApi, useCall} from '../../../hooks';
-import {BlockHeader} from '../explorer/BlockHeaders';
+import {BlockHeader} from './BlockHeaders';
 import {theme} from '../../../config/theme';
 import Extrinsics from './Extrinsics';
 import Events from '../explorer/Events';
@@ -14,10 +14,11 @@ import Logs from '../explorer/Logs';
 
 export default function BlockByHash({value}) {
   const {api} = useApi();
-  const events = useCall(api.query.system.events.at, [value]);
-  const getBlock = useCall(api.rpc.chain.getBlock, [value]);
-  const getHeader = useCall(api.rpc.chain.getHeader, [value]);
-  console.log('events', getBlock, getHeader, events, value);
+  let params = [value];
+  const events = useCall(api.query.system.events.at, params, {isSingle: true});
+  const getBlock = useCall(api.rpc.chain.getBlock, params, {isSingle: true});
+  const getHeader = useCall(api.rpc.chain.getHeader, params, {isSingle: true});
+  console.log('events', value, getBlock, getHeader, events);
   if (!getBlock || getBlock.isEmpty || !getHeader) {
     return null;
   }

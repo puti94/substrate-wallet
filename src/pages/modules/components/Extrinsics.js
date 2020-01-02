@@ -19,14 +19,12 @@ function RenderExtrinsic({props, extrinsic, index, registry}) {
   const isMortal = extrinsic.era.isMortalEra;
   let eraEnd;
   let eraStart;
-
   if (blockNumber && isMortal) {
     const mortalEra = extrinsic.era.asMortalEra;
 
     eraEnd = mortalEra.death(blockNumber.toNumber());
     eraStart = mortalEra.birth(blockNumber.toNumber());
   }
-  console.log('render');
   return (
     <View style={baseStyles.cardItem} key={`extrinsic:${index}`}>
       <View>

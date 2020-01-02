@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {isNull, isUndefined} from '@polkadot/util';
 
 function extractParams(fn, params, paramMap) {
@@ -21,27 +21,30 @@ export default function useCall(
   {defaultValue, isSingle, transform = v => v, paramMap = v => v} = {},
 ) {
   const [value, setValue] = useState(defaultValue);
-  const tracker = {
+  const tracker = useRef({
     isActive: false,
     count: 0,
     serialized: null,
     subscriber: null,
-  };
+  });
   useEffect(() => {
     if (fn) {
       const [serialized, mappedParams] = extractParams(fn, params, paramMap);
 
-      if (mappedParams && serialized !== tracker.serialized) {
-        tracker.serialized = serialized;
+      if (mappedParams && serialized !== tracker.current.serialized) {
+        tracker.current.serialized = serialized;
         const validParams = params.filter(p => !isUndefined(p));
-        tracker.isActive = true;
-        tracker.count = 0;
-        tracker.subscriber =
+        tracker.current.isActive = true;
+        tracker.current.count = 0;
+        tracker.current.subscriber =
           fn &&
           (!fn.meta || !fn.meta.type.isDoubleMap || validParams.length === 2)
             ? fn(...params, v => {
-                if (tracker.isActive && (!isSingle || !tracker.count)) {
-                  tracker.count++;
+                if (
+                  tracker.current.isActive &&
+                  (!isSingle || !tracker.current.count)
+                ) {
+                  tracker.current.count++;
                   setValue(transform(v));
                 }
               })
@@ -49,12 +52,11 @@ export default function useCall(
       }
     }
     return () => {
-      if (tracker.subscriber) {
-        tracker.subscriber.then(unsubFn => unsubFn());
-        tracker.subscriber = null;
+      if (tracker.current && tracker.current.subscriber) {
+        tracker.current.subscriber.then(unsubFn => unsubFn());
       }
     };
     // eslint-disable-next-line
-  }, [fn, params]);
+  }, [fn,params]);
   return value;
 }

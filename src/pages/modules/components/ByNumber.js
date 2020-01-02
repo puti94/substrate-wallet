@@ -9,7 +9,9 @@ import {useApi, useCall} from '../../../hooks';
 
 export default function BlockByNumber({value}) {
   const {api} = useApi();
-  const getBlockHash = useCall(api.rpc.chain.getBlockHash, [value]);
+  const getBlockHash = useCall(api.rpc.chain.getBlockHash, [value], {
+    isSingle: true,
+  });
   console.log('getBlockHash', value, getBlockHash);
   if (!getBlockHash) {
     return null;
