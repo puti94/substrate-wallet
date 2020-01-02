@@ -27,6 +27,7 @@ import BlockDetail from './pages/modules/explorer/BlockDetail';
 import AddressBook from './pages/set/addressBook';
 import AddAddress from './pages/set/addressBook/AddBook';
 import Extrinsic from './pages/modules/Extrinsic';
+import AddNode from './pages/set/AddNode';
 
 const getAppNavigator = ({initialRouteName}) =>
   createStackNavigator(
@@ -53,6 +54,7 @@ const getAppNavigator = ({initialRouteName}) =>
       AddAddress: {screen: AddAddress},
       Extrinsic: {screen: Extrinsic},
       NodeSet: {screen: NodeSet},
+      AddNode: {screen: AddNode},
     }),
     {
       initialRouteName: initialRouteName,

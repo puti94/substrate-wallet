@@ -58,12 +58,13 @@ export default {
       JSON.stringify(state.addressBooks),
     );
   }),
-  addNode: action((state, node) => {
+  addNode: action((state, {node, types}) => {
     state.customNodeList = [...state.customNodeList, node];
     localStorage.setItem(
       STORE_SETTING_CUSTOM_ENDPOINTS,
       JSON.stringify(state.customNodeList),
     );
+    localStorage.setItem(`${STORE_SETTING_CUSTOM_ENDPOINTS}_${node}`, types);
   }),
   removeNode: action((state, node) => {
     const index = state.customNodeList.findIndex(t => t === node);
@@ -73,5 +74,6 @@ export default {
       STORE_SETTING_CUSTOM_ENDPOINTS,
       JSON.stringify(state.customNodeList),
     );
+    localStorage.removeItem(`${STORE_SETTING_CUSTOM_ENDPOINTS}_${node}`);
   }),
 };

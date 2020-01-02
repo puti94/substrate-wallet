@@ -11,3 +11,4 @@ export const TYPE_ADDRESS_WITHACCOUNT = 'address_withAccount';
 export const TYPE_INPUT = 'input';
 export const TYPE_NUMBER = 'number';
 export const TYPE_BUTTON = 'button';
+export const TYPE_VOTE = 'vote';

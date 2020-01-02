@@ -36,12 +36,27 @@ export async function showDecodeAddressQR(): Promise<{
   });
 }
 
-export async function checkNodeConnect(node) {
-  return new Promise(async (resolve, reject) => {
-    setTimeout(reject, 15000);
-    const api = await ApiPromise.create({provider: new WsProvider(node)});
-    await api.isReady;
-    resolve();
+export async function checkNodeConnect(node, types) {
+  console.log('checkNodeConnect', node, types);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => reject({message: 'timeout'}), 15000);
+    const api = new ApiPromise({
+      provider: new WsProvider(node),
+      types,
+    });
+    const readyHandler = () => {
+      api.off('ready', readyHandler);
+      api.off('error', errorHandler);
+      resolve();
+    };
+    const errorHandler = e => {
+      console.log('错误', e);
+      api.off('ready', readyHandler);
+      api.off('error', errorHandler);
+      reject(e);
+    };
+    api.on('ready', readyHandler);
+    api.on('error', errorHandler);
   });
 }
 

@@ -9,6 +9,7 @@ import {
   TYPE_ADDRESS_WITHBOOK,
   TYPE_INPUT,
   TYPE_NUMBER,
+  TYPE_VOTE,
 } from '../components/Forms';
 
 /**
@@ -218,6 +219,8 @@ export function mapInputType(interfaceType) {
       return TYPE_ADDRESS_WITHBOOK;
     case 'Compact<Balance>':
       return TYPE_NUMBER;
+    case 'Vote':
+      return TYPE_VOTE;
     default:
       return TYPE_INPUT;
   }

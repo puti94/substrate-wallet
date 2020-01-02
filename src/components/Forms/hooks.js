@@ -72,7 +72,10 @@ export default function useForm({
   onSubmit,
   ...params
 }) {
-  fields.forEach(t => (initialValues[t.prop] = initialValues[t.prop] || ''));
+  fields.forEach(
+    t => (initialValues[t.prop] = t.value || initialValues[t.prop] || ''),
+  );
+
   let formik = useFormik({
     validateOnBlur: true,
     onSubmit,

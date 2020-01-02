@@ -11,7 +11,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@polkadot/api": "^0.98.1",
+    "@polkadot/api": "^0.99.1",
     "@polkadot/reactnative-identicon": "^0.47.1",
     "@polkadot/ui-keyring": "^0.47.1",
     "@polkadot/ui-settings": "^0.47.1",

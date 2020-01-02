@@ -14,6 +14,7 @@ import {useApi} from '../../hooks';
 import {theme} from '../../config/theme';
 import Identicon from '@polkadot/reactnative-identicon';
 import AccountName from '../../components/AccountName';
+import {icons} from '../../assets';
 
 const ReceiveQRCode = props => {
   const {address} = props;
@@ -50,7 +51,19 @@ const ReceiveQRCode = props => {
           />
         </View>
         <Text style={styles.hint}>收款地址</Text>
-        <QRCode value={value} size={px2dp(400)} />
+        <View style={{justifyContent: 'center'}}>
+          <QRCode
+            value={value}
+            size={px2dp(400)}
+            logoBorderRadius={px2dp(50)}
+            logoBackgroundColor={'white'}
+            logoSize={px2dp(100)}
+            logo={icons.logo}
+          />
+          {/*<View style={{position: 'absolute', alignSelf: 'center'}}>*/}
+          {/*  <Identicon value={address} size={px2dp(40)} />*/}
+          {/*</View>*/}
+        </View>
       </View>
     </BaseContainer>
   );

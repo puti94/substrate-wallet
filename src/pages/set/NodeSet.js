@@ -10,14 +10,14 @@ import {useApi} from '../../hooks';
 import CommonButton from '../../components/CommonButton';
 import Icon from '../../components/Icon';
 import {checkNodeConnect} from '../../utils/base';
-import {showLoading, showTextInput} from '../../utils/dialog';
+import {showLoading} from '../../utils/dialog';
 import {RouteHelper} from 'react-navigation-easy-helper';
 import {useStoreActions, useStoreState} from 'easy-peasy';
+import {STORE_SETTING_CUSTOM_ENDPOINTS} from '../../config';
 
 export default function NodeSet() {
   const {endpoint, setApiUrl} = useApi();
   const customNodeList = useStoreState(state => state.set.customNodeList);
-  const addNode = useStoreActions(actions => actions.set.addNode);
   const removeNode = useStoreActions(actions => actions.set.removeNode);
   const customList = customNodeList.map((t, i) => ({
     title: `Custom #${i + 1}`,
@@ -29,14 +29,18 @@ export default function NodeSet() {
 
   async function saveNode(url) {
     const hide = showLoading('Connecting');
+    const _types = localStorage.getItem(
+      `${STORE_SETTING_CUSTOM_ENDPOINTS}_${url}`,
+    );
+    const types = _types ? JSON.parse(_types) : {};
     try {
-      await checkNodeConnect(url);
+      await checkNodeConnect(url, types);
     } catch (e) {
-      Toast.fail('Connect fail');
+      Toast.fail('Connect fail:' + e.message);
       hide();
       return false;
     }
-    await setApiUrl(url);
+    await setApiUrl(url, types);
     hide();
     return true;
   }
@@ -84,12 +88,7 @@ export default function NodeSet() {
       ))}
       <CommonButton
         onPress={async () => {
-          const url = await showTextInput({title: '请输入节点'});
-          const res = await saveNode(url);
-          if (res) {
-            addNode(url);
-            RouteHelper.reset('Main');
-          }
+          RouteHelper.navigate('AddNode');
         }}
         icon={'Ionicons/md-add-circle-outline'}
         title={'Add Node'}

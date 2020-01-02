@@ -48,9 +48,9 @@ export default function AccountName({
   style,
   withShort,
 }: Props): React.ReactElement<Props> {
-  const {api} = useApi();
+  const {api, isApiReady} = useApi();
   const {accountIndex, nickname} =
-    useCall(api.derive.accounts.info, [params]) || {};
+    useCall(isApiReady ? api.derive.accounts.info : null, [params]) || {};
   let name;
   if (!nickname) {
     name = defaultOrAddr(defaultName, params, withShort ? null : accountIndex);

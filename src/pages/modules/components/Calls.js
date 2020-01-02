@@ -29,16 +29,16 @@ function buildCustomFields(params) {
     prop: t.name,
     required: !t.isOptional,
     type: mapInputType(t.type),
-    items: t.items
-      ? buildFields(
-          t.items.map(t => ({
-            label: `${t.isOptional ? '' : '* '}${t.name}:${t.type}`,
-            prop: t.name,
-            required: !t.isOptional,
-            type: mapInputType(t.type),
-          })),
-        )
-      : undefined,
+    // items: t.items
+    //   ? buildFields(
+    //       t.items.map(t => ({
+    //         label: `${t.isOptional ? '' : '* '}${t.name}:${t.type}`,
+    //         prop: t.name,
+    //         required: !t.isOptional,
+    //         type: mapInputType(t.type),
+    //       })),
+    //     )
+    //   : undefined,
   }));
 }
 
@@ -61,7 +61,6 @@ export default function Calls({
   const setParams = params => {
     setCustomFields(buildCustomFields(params));
   };
-
   const form = useForm({
     initialValues: {
       module: initialModule,

@@ -9,6 +9,8 @@ import {
   TYPE_ADDRESS,
   TYPE_ADDRESS_WITHACCOUNT,
   TYPE_ADDRESS_WITHBOOK,
+  TYPE_SELECT,
+  TYPE_VOTE,
 } from '../types';
 import {RouteHelper} from 'react-navigation-easy-helper';
 ///地址类型的默认参数
@@ -41,10 +43,16 @@ const ADDRESS_WITHACCOUNT: FieldProps = {
     });
   },
 };
+const VOTE: FieldProps = {
+  type: TYPE_SELECT,
+  value: '0',
+  items: [{label: 'Nay', value: '0'}, {label: 'Aye', value: '-1'}],
+};
 const DEFAULT_PROPS = {
   [TYPE_ADDRESS]: ADDRESS_PROPS,
   [TYPE_ADDRESS_WITHBOOK]: ADDRESS_PROPS_WITH_BOOK,
   [TYPE_ADDRESS_WITHACCOUNT]: ADDRESS_WITHACCOUNT,
+  [TYPE_VOTE]: VOTE,
 };
 
 export default function buildProps(props) {

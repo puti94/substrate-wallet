@@ -14,7 +14,7 @@ import KeyringStore from '../utils/KeyringStore';
 
 const DEFAULT_DECIMALS = 12;
 const DEFAULT_SS58 = addressDefaults.prefix;
-const register = new TypeRegistry();
+export const register = new TypeRegistry();
 let api, node;
 
 export {api, node};
@@ -32,8 +32,8 @@ export default class Api extends React.PureComponent<Prop> {
     const url = props.url;
     const provider = new WsProvider(url);
 
-    const setApi = async provider => {
-      api = this.createApi(provider);
+    const setApi = async (provider, types) => {
+      api = this.createApi(provider, types);
       node = provider.endpoint;
       props.onUrlChange && props.onUrlChange(provider.endpoint);
       this.unsubscribeEvents();
@@ -45,14 +45,14 @@ export default class Api extends React.PureComponent<Prop> {
       );
       return api.isReady;
     };
-    const setApiUrl = url => setApi(new WsProvider(url));
+    const setApiUrl = (url, types) => setApi(new WsProvider(url), types);
     api = this.createApi(provider);
     node = url;
     this.state = {
       api,
       endpoint: url,
       isApiConnected: false,
-      isApiConnectedError: false,
+      apiConnectedErrorMessage: '',
       isApiReady: false,
       isSubstrateV2: true,
       ss58Format: DEFAULT_SS58,
@@ -60,8 +60,8 @@ export default class Api extends React.PureComponent<Prop> {
     };
   }
 
-  createApi(provider) {
-    return new ApiPromise({provider, register, typesSpec});
+  createApi(provider, types) {
+    return new ApiPromise({provider, types, register, typesSpec});
   }
 
   componentDidMount() {
@@ -70,7 +70,7 @@ export default class Api extends React.PureComponent<Prop> {
 
   connectHandler = () => {
     console.log('节点connected');
-    this.setState({isApiConnected: true, isApiConnectedError: false});
+    this.setState({isApiConnected: true, apiConnectedErrorMessage: ''});
   };
   disconnectedHandler = () => {
     console.log('节点disconnected');
@@ -87,8 +87,11 @@ export default class Api extends React.PureComponent<Prop> {
   };
 
   errorHandler = error => {
-    console.log('节点', error);
-    this.setState({isApiConnected: false, isApiConnectedError: true});
+    console.log('节点链接失败', error.message);
+    this.setState({
+      isApiConnected: false,
+      apiConnectedErrorMessage: error.message || 'Unknown error',
+    });
   };
 
   unsubscribeEvents() {
@@ -167,7 +170,7 @@ export default class Api extends React.PureComponent<Prop> {
       apiDefaultTx,
       apiDefaultTxSudo,
       isApiReady: true,
-      isApiConnectedError: false,
+      apiConnectedErrorMessage: '',
       ss58Format,
       isDevelopment,
       isSubstrateV2,
@@ -193,7 +196,7 @@ export default class Api extends React.PureComponent<Prop> {
       systemVersion,
       endpoint,
       ss58Format,
-      isApiConnectedError,
+      apiConnectedErrorMessage,
     } = this.state;
     return (
       <ApiContext.Provider
@@ -204,7 +207,7 @@ export default class Api extends React.PureComponent<Prop> {
           apiDefaultTxSudo,
           isApiConnected,
           isApiReady: isApiReady && !!systemChain,
-          isApiConnectedError,
+          apiConnectedErrorMessage,
           isDevelopment,
           isSubstrateV2,
           isWaitingInjected,

@@ -14,17 +14,17 @@ export type Props = {
   title?: string,
 } & ButtonProps;
 export default class Select extends Button<Props> {
-  getItems(items: Items) {
+  getItems(items: Items = []) {
     return items.map(t => (typeof t === 'string' ? t : t.label));
   }
 
-  getIndex(items: Items, value: string) {
+  getIndex(items: Items = [], value: string) {
     return items.findIndex(
       t => (typeof t === 'string' ? t : t.value) === value,
     );
   }
 
-  getLabelValue(items: Items, label) {
+  getLabelValue(items: Items = [], label) {
     let item =
       items[
         items.findIndex(
@@ -34,7 +34,7 @@ export default class Select extends Button<Props> {
     return typeof item === 'string' ? item : item.value;
   }
 
-  getValueLabel(items: Items, value) {
+  getValueLabel(items: Items = [], value) {
     let item =
       items[
         items.findIndex(t => (typeof t === 'string' ? t : t.value) === value)
@@ -47,7 +47,9 @@ export default class Select extends Button<Props> {
       return null;
     }
     const {items} = this.props;
-    return this.getValueLabel(items, value);
+    let valueLabel = this.getValueLabel(items, value);
+    console.log('valueLabel', valueLabel);
+    return valueLabel;
   }
 
   handleClick() {
@@ -62,6 +64,7 @@ export default class Select extends Button<Props> {
         item => {
           key = null;
           let labelValue = this.getLabelValue(items, item);
+          console.log('labelValue', labelValue);
           onChangeText && onChangeText(labelValue);
           resolve();
         },

@@ -13,8 +13,11 @@ type Props = {
 };
 
 export default function BestNumber({children, style, label}: Props) {
-  const {api} = useApi();
-  const bestNumber = useCall(api.derive.chain.bestNumber, []);
+  const {api, isApiReady} = useApi();
+  const bestNumber = useCall(
+    isApiReady ? api?.derive?.chain?.bestNumber : null,
+    [],
+  );
   return (
     <Text style={style}>
       {label || ''}

@@ -36,7 +36,7 @@ function BaseContainer(props: Props) {
 }
 
 function Content(props) {
-  const {isApiReady, isApiConnectedError} = useApi();
+  const {isApiReady, apiConnectedErrorMessage} = useApi();
   const {
     children,
     useScrollView,
@@ -45,10 +45,10 @@ function Content(props) {
     fitIPhoneX,
   } = props;
   if (useApiStatus) {
-    if (isApiConnectedError) {
+    if (apiConnectedErrorMessage) {
       return (
         <ErrorView
-          errorText={'连接失败'}
+          errorText={`连接失败:${apiConnectedErrorMessage}`}
           btnTitle={'切换节点'}
           onPress={() => {
             RouteHelper.navigate('NodeSet');

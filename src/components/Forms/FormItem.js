@@ -18,6 +18,7 @@ import {
   TYPE_NUMBER,
   TYPE_PASSWORD,
   TYPE_SELECT,
+  TYPE_VOTE,
 } from './types';
 
 export type FieldProps = {
@@ -44,6 +45,7 @@ const mapTypeToComponent = type => {
     case TYPE_BUTTON:
       return Button;
     case TYPE_SELECT:
+    case TYPE_VOTE:
       return Select;
     case TYPE_NUMBER:
       return Number;
