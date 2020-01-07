@@ -38,25 +38,52 @@ export function BaseForm(props: Props) {
   const inputs = useRef({});
   return (
     <View style={style}>
-      {fields.map((t, index) => (
-        <FormItem
-          key={t.prop}
-          ref={ref => (inputs.current[t.prop] = ref)}
-          handleChange={handleChange(t.prop)}
-          onBlur={handleBlur(t.prop)}
-          value={values[t.prop]}
-          error={errors[t.prop]}
-          returnKeyType={index === fields.length - 1 ? 'done' : 'next'}
-          onSubmitEditing={() => {
-            if (index !== fields.length - 1) {
-              inputs.current[fields[index + 1].prop].focus();
-            } else {
-              autoSubmit && submitForm();
-            }
-          }}
-          {...t}
-        />
-      ))}
+      {fields.map((t, index) =>
+        t.type !== 'form' ? (
+          <FormItem
+            key={t.prop}
+            ref={ref => (inputs.current[t.prop] = ref)}
+            handleChange={handleChange(t.prop)}
+            onBlur={handleBlur(t.prop)}
+            value={values[t.prop]}
+            error={errors[t.prop]}
+            returnKeyType={index === fields.length - 1 ? 'done' : 'next'}
+            onSubmitEditing={() => {
+              if (index !== fields.length - 1) {
+                inputs.current[fields[index + 1].prop].focus();
+              } else {
+                autoSubmit && submitForm();
+              }
+            }}
+            {...t}
+          />
+        ) : (
+          <View style={{marginLeft: px2dp(40)}}>
+            {t.fields.map((_t, _i) => (
+              <FormItem
+                key={_t.prop}
+                ref={ref => (inputs.current[_t.prop] = ref)}
+                handleChange={handleChange(_t.prop)}
+                onBlur={handleBlur(_t.prop)}
+                value={values[_t.prop]}
+                error={errors[_t.prop]}
+                // returnKeyType={index === fields.length - 1 ? 'done' : 'next'}
+                onSubmitEditing={() => {
+                  // if (
+                  //   index !== fields.length - 1 &&
+                  //   _i !== t.fields.length - 1
+                  // ) {
+                  //   inputs.current[fields[index + 1].prop].focus();
+                  // } else {
+                  //   autoSubmit && submitForm();
+                  // }
+                }}
+                {..._t}
+              />
+            ))}
+          </View>
+        ),
+      )}
       {children}
       {showSubmitButton && (
         <CommonButton onPress={handleSubmit} title={submitTitle} />

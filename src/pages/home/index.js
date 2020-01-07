@@ -117,7 +117,9 @@ function AccountInfo() {
         <Section title={'账户信息'} />
         <TouchableOpacity
           onPress={() => {
-            RouteHelper.navigate('Transfer');
+            RouteHelper.navigate('AccountDetails', {
+              accountId: selectedAccount.address,
+            });
           }}
           style={{marginTop: px2dp(30), marginRight: px2dp(40)}}>
           <Icon

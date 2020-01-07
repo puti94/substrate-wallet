@@ -3,7 +3,7 @@
  * Time: 2019-12-13 14:17.
  */
 import React, {Component} from 'react';
-import {Text, View, Keyboard} from 'react-native';
+import {Text, View, Keyboard, TouchableOpacity} from 'react-native';
 import {theme} from '../../../config/theme';
 import Icon from '../../Icon';
 
@@ -61,7 +61,8 @@ export default class Button<T> extends Component<T & Props> {
     } = this.props;
     const placeholder = this.props.placeholder || `请选择${label}`;
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => this.click()}
         style={{
           flex: 1,
           height: px2dp(60),
@@ -78,7 +79,7 @@ export default class Button<T> extends Component<T & Props> {
           )}
         </Text>
         <Icon icon={'right'} size={px2dp(30)} />
-      </View>
+      </TouchableOpacity>
     );
   }
 }

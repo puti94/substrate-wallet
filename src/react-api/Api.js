@@ -11,6 +11,7 @@ import typesSpec from './overrides/spec';
 import addressDefaults from '@polkadot/util-crypto/address/defaults';
 import keyring from '@polkadot/ui-keyring';
 import KeyringStore from '../utils/KeyringStore';
+import {STORE_SETTING_CUSTOM_ENDPOINTS} from '../config';
 
 const DEFAULT_DECIMALS = 12;
 const DEFAULT_SS58 = addressDefaults.prefix;
@@ -46,7 +47,11 @@ export default class Api extends React.PureComponent<Prop> {
       return api.isReady;
     };
     const setApiUrl = (url, types) => setApi(new WsProvider(url), types);
-    api = this.createApi(provider);
+    const _types = localStorage.getItem(
+      `${STORE_SETTING_CUSTOM_ENDPOINTS}_${url}`,
+    );
+    const types = _types ? JSON.parse(_types) : {};
+    api = this.createApi(provider, types);
     node = url;
     this.state = {
       api,

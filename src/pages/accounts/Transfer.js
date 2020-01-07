@@ -9,7 +9,7 @@ import {
   buildFields,
   useForm,
   BaseForm,
-  TYPE_NUMBER,
+  TYPE_BALANCE,
   TYPE_ADDRESS_WITHBOOK,
 } from '../../components/Forms';
 import {showDecodeAddressQR} from '../../utils/base';
@@ -38,7 +38,7 @@ export default function Transfer({receipt, amount}) {
       },
       {
         prop: 'amount',
-        type: TYPE_NUMBER,
+        type: TYPE_BALANCE,
         label: '数量',
         required: true,
         hint: (
@@ -76,7 +76,7 @@ export default function Transfer({receipt, amount}) {
       const isSend = await sendTx({
         section: 'balances',
         method: 'transfer',
-        args: [receipt, toBN(amount).toString()],
+        args: [receipt, amount],
         txFailedCb: res => {
           console.log('txFailedCb', res);
         },

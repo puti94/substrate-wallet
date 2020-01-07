@@ -4,12 +4,17 @@
  */
 import {GenericCall} from '@polkadot/types';
 import map from '@polkadot/jsonrpc';
+import {TypeDefInfo} from '@polkadot/types/types';
+
+const {getTypeDef, createType} = require('@polkadot/types');
 import {
-  TYPE_ADDRESS,
   TYPE_ADDRESS_WITHBOOK,
+  TYPE_ENUM,
   TYPE_INPUT,
   TYPE_NUMBER,
+  TYPE_BALANCE,
   TYPE_VOTE,
+  TYPE_BOOL,
 } from '../components/Forms';
 
 /**
@@ -88,7 +93,7 @@ export function createTxMethodOptions(api, sectionName) {
         .map(t => ({
           name: t.name.toString(),
           type: t.type.toString(),
-          isOptional: true,
+          isOptional: false,
         }));
       return {
         description: method.meta.documentation[0] || value,
@@ -166,7 +171,7 @@ export function createQueryMethodOptions(api, sectionName) {
         };
         if (array) {
           value.type = 'form';
-          value.items = array.map(t => ({
+          value.fields = array.map(t => ({
             name: t,
             type: t,
           }));
@@ -211,17 +216,111 @@ export function getConstsOptions(api) {
   return obj;
 }
 
-export function mapInputType(interfaceType) {
-  switch (interfaceType) {
-    case 'AccountId':
-    case 'Address':
-    case 'ValidatorId':
-      return TYPE_ADDRESS_WITHBOOK;
-    case 'Compact<Balance>':
-      return TYPE_NUMBER;
-    case 'Vote':
-      return TYPE_VOTE;
-    default:
-      return TYPE_INPUT;
+const components = [
+  {
+    c: TYPE_ADDRESS_WITHBOOK,
+    t: [
+      'AccountId',
+      'AccountIdOf',
+      'Address',
+      'AuthorityId',
+      'SessionKey',
+      'ValidatorId',
+    ],
+  },
+  {
+    c: TYPE_NUMBER,
+    t: [
+      'AccountIndex',
+      'AssetId',
+      'BlockNumber',
+      'Gas',
+      'Index',
+      'Nonce',
+      'ParaId',
+      'ProposalIndex',
+      'PropIndex',
+      'ReferendumIndex',
+      'i8',
+      'i16',
+      'i32',
+      'i64',
+      'i128',
+      'u8',
+      'u16',
+      'u32',
+      'u64',
+      'u128',
+      'u256',
+      'VoteIndex',
+    ],
+  },
+  {c: TYPE_BALANCE, t: ['Amount', 'AssetOf', 'Balance', 'BalanceOf']},
+  {c: TYPE_BOOL, t: ['bool']},
+  {c: TYPE_INPUT, t: ['Bytes']},
+  {c: TYPE_INPUT, t: ['Code']},
+  {c: TYPE_INPUT, t: ['Raw', 'Keys']},
+  {c: TYPE_ENUM, t: ['Enum']},
+  {c: TYPE_INPUT, t: ['BlockHash', 'CodeHash', 'Hash', 'H256', 'SeedOf']},
+  {c: TYPE_INPUT, t: ['H512', 'Signature']},
+  {c: TYPE_INPUT, t: ['IdentityInfo']},
+  {c: TYPE_INPUT, t: ['KeyValue']},
+  {c: TYPE_INPUT, t: ['Vec<KeyValue>']},
+  {c: TYPE_INPUT, t: ['Moment', 'MomentOf']},
+  {c: TYPE_INPUT, t: ['Null']},
+  {c: TYPE_INPUT, t: ['Option']},
+  {c: TYPE_INPUT, t: ['Proposal']},
+  {c: TYPE_INPUT, t: ['String', 'Text']},
+  {c: TYPE_INPUT, t: ['Struct']},
+  {c: TYPE_INPUT, t: ['Tuple']},
+  {c: TYPE_INPUT, t: ['Vec']},
+  {c: TYPE_VOTE, t: ['Vote']},
+  {c: TYPE_INPUT, t: ['VoteThreshold']},
+  {c: TYPE_INPUT, t: ['Unknown']},
+].reduce((components, {c, t}) => {
+  t.forEach(type => {
+    components[type] = c;
+  });
+  return components;
+}, {});
+
+export function mapInputType(api, interfaceType) {
+  let type = components[interfaceType];
+  if (!type) {
+    const instance = createType(api.registry, interfaceType);
+    const raw = getTypeDef(instance.toRawType());
+    type = (({info, sub, type}) => {
+      switch (info) {
+        case TypeDefInfo.Compact:
+          return sub.type;
+
+        case TypeDefInfo.Option:
+          return 'Option';
+
+        case TypeDefInfo.Enum:
+          return 'Enum';
+
+        case TypeDefInfo.Struct:
+          return 'Struct';
+
+        case TypeDefInfo.Tuple:
+          // if (components[type] === Account) {
+          //   return type;
+          // }
+          return 'Tuple';
+
+        case TypeDefInfo.Vec:
+          if (type === 'Vec<u8>') {
+            return 'Bytes';
+          }
+
+          return ['Vec<KeyValue>'].includes(type) ? 'Vec<KeyValue>' : 'Vec';
+
+        default:
+          return type;
+      }
+    })(raw || {});
+    type = components[type];
   }
+  return type;
 }

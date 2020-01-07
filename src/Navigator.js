@@ -29,6 +29,7 @@ import AddAddress from './pages/set/addressBook/AddBook';
 import Extrinsic from './pages/modules/Extrinsic';
 import AddNode from './pages/set/AddNode';
 import Staking from './pages/modules/staking';
+import AccountDetails from './pages/accounts/detail';
 
 const getAppNavigator = ({initialRouteName}) =>
   createStackNavigator(
@@ -57,6 +58,7 @@ const getAppNavigator = ({initialRouteName}) =>
       Extrinsic: {screen: Extrinsic},
       NodeSet: {screen: NodeSet},
       AddNode: {screen: AddNode},
+      AccountDetails: {screen: AccountDetails},
     }),
     {
       initialRouteName: initialRouteName,

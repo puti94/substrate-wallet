@@ -12,33 +12,32 @@ import {
   BaseForm,
   TYPE_BUTTON,
   TYPE_ADDRESS_WITHACCOUNT,
-  TYPE_NUMBER,
 } from '../../../components/Forms';
 import {SelectView} from '../../../components/DialogViews/SelectView';
 import WithCallResult from '../../../components/WithCallResult';
 import {useStoreState} from 'easy-peasy';
 import {toAddress} from '../../../utils/defaults';
-import {useSignTx} from '../../../hooks';
-import {toBN} from '../../../utils/format';
+import {useApi, useSignTx} from '../../../hooks';
 import AvailableText from '../../../components/AvailableText';
 
-function buildCustomFields(params) {
+function buildCustomFields(api, params) {
   return params.map(t => ({
     tag: 'params',
     label: `${t.isOptional ? '' : '* '}${t.name}:${t.type}`,
     prop: t.name,
     required: !t.isOptional,
-    type: mapInputType(t.type),
-    // items: t.items
-    //   ? buildFields(
-    //       t.items.map(t => ({
-    //         label: `${t.isOptional ? '' : '* '}${t.name}:${t.type}`,
-    //         prop: t.name,
-    //         required: !t.isOptional,
-    //         type: mapInputType(t.type),
-    //       })),
-    //     )
-    //   : undefined,
+    type: t.type === 'form' ? 'form' : mapInputType(api, t.type),
+    originType: t.type,
+    fields: t.fields
+      ? buildFields(
+          t.fields.map(t => ({
+            label: `${t.isOptional ? '' : '* '}${t.name}:${t.type}`,
+            prop: t.name,
+            required: !t.isOptional,
+            type: mapInputType(api, t.type),
+          })),
+        )
+      : undefined,
   }));
 }
 
@@ -53,19 +52,21 @@ export default function Calls({
     state => state.accounts.selectedAddress,
   );
   const signTx = useSignTx();
+  const {api} = useApi();
   const [customFields, setCustomFields] = useState(
-    buildCustomFields(options[initialModule][initialCallIndex].params),
+    buildCustomFields(api, options[initialModule][initialCallIndex].params),
   );
   const [callList, setCallList] = useState([]);
 
   const setParams = params => {
-    setCustomFields(buildCustomFields(params));
+    let fields = buildCustomFields(api, params);
+    setCustomFields(fields);
   };
   const form = useForm({
     initialValues: {
       module: initialModule,
       call: options[initialModule][initialCallIndex].value,
-      signer: toAddress(selectedAddress),
+      signer: withSigner ? toAddress(selectedAddress) : undefined,
     },
     fields: buildFields([
       withSigner
@@ -145,16 +146,14 @@ export default function Calls({
     onSubmit: async values => {
       const args = customFields
         .map(t => {
-          if (t.type === 'form') {
-            return t.items.map(v => values[t.key][v.key]);
-          }
-          if (t.type === TYPE_NUMBER) {
-            return toBN(values[t.prop]).toString();
-          }
+          // if (t.type === 'form') {
+          //   return t.items.map(v => values[t.key][v.key]);
+          // }
           return values[t.prop];
         })
         .filter(t => !!t);
       console.log('参数', values, args);
+      // return;
       if (type === 'tx' && withSigner) {
         const message = await signTx({
           section: values.module,

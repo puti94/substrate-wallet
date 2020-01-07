@@ -16,6 +16,7 @@
     "@polkadot/ui-keyring": "^0.47.1",
     "@polkadot/ui-settings": "^0.47.1",
     "@react-native-community/async-storage": "^1.7.0",
+    "axios": "^0.19.0",
     "bn.js": "^5.0.0",
     "easy-peasy": "^3.2.3",
     "formik": "^2.0.8",

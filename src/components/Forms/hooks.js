@@ -5,6 +5,8 @@
 import {useFormik} from 'formik';
 import type {FieldProps} from './FormItem';
 import buildProps from './util/buildProps';
+import {TYPE_BALANCE, TYPE_BOOL, TYPE_VOTE} from './types';
+import {toBN} from '../../utils/format';
 
 export function buildFields(
   fields: Array<FieldProps>,
@@ -72,19 +74,54 @@ export default function useForm({
   onSubmit,
   ...params
 }) {
-  fields.forEach(
+  const _fields = [];
+  fields.forEach(t => {
+    if (t.type === 'form') {
+      _fields.push(...t.fields);
+    } else {
+      _fields.push(t);
+    }
+  });
+  _fields.forEach(
     t => (initialValues[t.prop] = t.value || initialValues[t.prop] || ''),
   );
 
-  let formik = useFormik({
+  const formik = useFormik({
     validateOnBlur: true,
-    onSubmit,
+    onSubmit: values => {
+      onSubmit(handleSubmitParams(fields, values));
+    },
     ...params,
     initialValues,
     validate: values => {
-      return _validate(values, fields);
+      return _validate(values, _fields);
     },
   });
   formik.fields = fields;
   return formik;
+}
+
+function handleSubmitParams(fields: Array<FieldProps>, values) {
+  const params = {};
+  fields.forEach(t => {
+    const value = values[t.prop];
+    switch (t.type) {
+      case 'form':
+        const _params = handleSubmitParams(t.fields, values);
+        params[t.prop] = t.fields.map(t => _params[t.prop]);
+        break;
+      case TYPE_BALANCE:
+        params[t.prop] = toBN(value).toString();
+        break;
+      case TYPE_BOOL:
+        params[t.prop] = value === '-1';
+        break;
+      case TYPE_VOTE:
+        params[t.prop] = value === '-1';
+        break;
+      default:
+        params[t.prop] = value;
+    }
+  });
+  return params;
 }

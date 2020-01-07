@@ -7,18 +7,9 @@ import {Text} from 'react-native';
 import Icon from './Icon';
 import {useApi} from '../hooks';
 import {RouteHelper} from 'react-navigation-easy-helper';
+import {CHAINS, EXPLORER_BASE} from '../config';
 
 export type LinkTypes = 'address' | 'block' | 'extrinsic';
-
-const BASE = 'https://polkascan.io/pre/';
-
-const CHAINS = {
-  Alexander: 'alexander',
-  Kusama: 'kusama-cc1', // old name via W3F nodes
-  'Kusama CC1': 'kusama-cc1',
-  'Kusama CC2': 'kusama-cc2',
-  'Kusama CC3': 'kusama-cc3',
-};
 
 const TYPES: Record<string, string> = {
   address: '/module/account/',
@@ -39,13 +30,13 @@ function LinkPolkascan({data, type, withShort}) {
     <Text
       onPress={() => {
         RouteHelper.navigate('Web', {
-          url: `${BASE}${extChain}${extType}${data}`,
+          url: `${EXPLORER_BASE}${extChain}${extType}${data}`,
         });
       }}>
       {withShort ? (
         <Icon icon="external" size={px2dp(30)} />
       ) : (
-        i18n('View this {{type}} on Polkascan.io', {type})
+        `View this ${type} on Polkascan.io`
       )}
     </Text>
   );

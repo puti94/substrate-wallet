@@ -10,12 +10,17 @@ import Select, {Props as SelectedProps} from './Inputs/Select';
 import Button, {Props as ButtonProps} from './Inputs/Button';
 import Number from './Inputs/Number';
 import Area from './Inputs/Area';
+import Enum from './Inputs/Enum';
+import Bool from './Inputs/Bool';
 import Icon from '../Icon';
 import Password from './Inputs/Password';
 import {
   TYPE_AREA,
+  TYPE_BOOL,
   TYPE_BUTTON,
+  TYPE_ENUM,
   TYPE_NUMBER,
+  TYPE_BALANCE,
   TYPE_PASSWORD,
   TYPE_SELECT,
   TYPE_VOTE,
@@ -48,11 +53,16 @@ const mapTypeToComponent = type => {
     case TYPE_VOTE:
       return Select;
     case TYPE_NUMBER:
+    case TYPE_BALANCE:
       return Number;
     case TYPE_PASSWORD:
       return Password;
     case TYPE_AREA:
       return Area;
+    case TYPE_ENUM:
+      return Enum;
+    case TYPE_BOOL:
+      return Bool;
     default:
       return Input;
   }

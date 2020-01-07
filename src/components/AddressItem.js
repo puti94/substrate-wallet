@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: px2dp(20),
     height: px2dp(140),
-    backgroundColor: 'white',
     borderWidth: theme.hairline,
     borderColor: theme.borderColor,
   },
