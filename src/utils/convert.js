@@ -15,6 +15,7 @@ import {
   TYPE_BALANCE,
   TYPE_VOTE,
   TYPE_BOOL,
+  TYPE_BYTES,
 } from '../components/Forms';
 
 /**
@@ -257,7 +258,7 @@ const components = [
   },
   {c: TYPE_BALANCE, t: ['Amount', 'AssetOf', 'Balance', 'BalanceOf']},
   {c: TYPE_BOOL, t: ['bool']},
-  {c: TYPE_INPUT, t: ['Bytes']},
+  {c: TYPE_BYTES, t: ['Bytes']},
   {c: TYPE_INPUT, t: ['Code']},
   {c: TYPE_INPUT, t: ['Raw', 'Keys']},
   {c: TYPE_ENUM, t: ['Enum']},

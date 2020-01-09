@@ -2,13 +2,12 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import {formatNumber} from '@polkadot/util';
 import {baseStyles, theme} from '../../../config/theme';
 import Icon from '../../../components/Icon';
 import {getTypeDef} from '@polkadot/types';
-import {EventsContext} from '../../../components/query/Events';
 import Params from '../../../components/Params';
 
 type Props = {

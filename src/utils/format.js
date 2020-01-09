@@ -29,3 +29,12 @@ export function toBN(number): BN {
   let s1 = `${a}${b.padEnd(decimals, '0')}`;
   return new BN(s1);
 }
+export function formatHex(value = '') {
+  if (!value) {
+    return '0x';
+  }
+  if (value.startsWith('0x')) {
+    return value;
+  }
+  return `0x${value}`;
+}

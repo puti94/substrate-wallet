@@ -42,7 +42,6 @@ export default function Call({
     <View style={style}>
       <Params
         style={{marginLeft: px2dp(60)}}
-        isDisabled
         onError={onError}
         params={params}
         values={values}

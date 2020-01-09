@@ -19,6 +19,7 @@
     "axios": "^0.19.0",
     "bn.js": "^5.0.0",
     "easy-peasy": "^3.2.3",
+    "fast-text-encoding": "^1.0.0",
     "formik": "^2.0.8",
     "i18n-js": "^3.5.0",
     "node-libs-react-native": "^1.0.3",

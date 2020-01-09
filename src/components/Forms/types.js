@@ -9,6 +9,7 @@ export const TYPE_ADDRESS = 'address';
 export const TYPE_ADDRESS_WITHBOOK = 'address_withBook';
 export const TYPE_ADDRESS_WITHACCOUNT = 'address_withAccount';
 export const TYPE_INPUT = 'input';
+export const TYPE_BYTES = 'bytes';
 export const TYPE_NUMBER = 'number';
 export const TYPE_BALANCE = 'balance';
 export const TYPE_BUTTON = 'button';

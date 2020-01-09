@@ -151,7 +151,7 @@ export default function Calls({
           // }
           return values[t.prop];
         })
-        .filter(t => !!t);
+        .filter(t => typeof t !== 'undefined');
       console.log('参数', values, args);
       // return;
       if (type === 'tx' && withSigner) {
@@ -162,6 +162,7 @@ export default function Calls({
           signer: values.signer,
         });
         if (!message) {
+          console.log('失败');
           return;
         }
         setCallList([
