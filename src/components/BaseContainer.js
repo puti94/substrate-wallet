@@ -25,6 +25,7 @@ function BaseContainer(props: Props) {
       StatusBar.setTranslucent(true);
       StatusBar.setBackgroundColor('transparent');
     }
+    StatusBar.setBarStyle('dark-content');
   }, []);
   const {style, ...otherProps} = props;
   return (

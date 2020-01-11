@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import {u8aToHex} from '@polkadot/util';
+import {u8aToHex, isHex} from '@polkadot/util';
 import {decodeAddress, encodeAddress} from '@polkadot/keyring';
 
 const ACCOUNT_PREFIX = 'account:';
@@ -45,6 +45,14 @@ const contractRegex = new RegExp(`^${CONTRACT_PREFIX}0x[0-9a-f]*`, '');
 const isPassValid = password => {
   return password.length >= 8 && password.length <= 32;
 };
+
+export function isHexSeed(seed: string): boolean {
+  return isHex(seed) && seed.length === 66;
+}
+
+export function seedValidate(seed: string): boolean {
+  return (seed.length > 0 && seed.length <= 32) || isHexSeed(seed);
+}
 export {
   accountKey,
   accountRegex,

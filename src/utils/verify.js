@@ -33,7 +33,7 @@ export function isValueEmpty(value) {
  */
 export function isMnemonic(value) {
   let number = fixMnemonic(value).split(' ').length;
-  return number === 12;
+  return [12, 15, 18, 21, 24].includes(number);
 }
 
 /**

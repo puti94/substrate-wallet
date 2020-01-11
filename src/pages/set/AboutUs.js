@@ -27,6 +27,13 @@ export default function AboutUs() {
           RouteHelper.navigate('Web', {url: 'https://www.github.com/puti94'});
         }}
       />
+      <ListRow
+          title={'Website'}
+          detail={'https://puti94.github.io/vanity-address/'}
+          onPress={() => {
+            RouteHelper.navigate('Web', {url: 'https://puti94.github.io/vanity-address/'});
+          }}
+      />
     </BaseContainer>
   );
 }

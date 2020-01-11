@@ -6,6 +6,7 @@ export default {
   Main: {
     Home: '首页',
     Module: '模块',
+    Find: '发现',
     Set: '设置',
   },
   Base: {

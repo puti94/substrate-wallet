@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, BackHandler} from 'react-native';
+import {Platform, BackHandler, View, TouchableOpacity} from 'react-native';
 import BaseContainer from '../../components/BaseContainer';
 import LoadingView from '../../components/LoadingView';
 import ErrorView from '../../components/ErrorView';
@@ -12,6 +12,8 @@ import WebView from 'react-native-webview';
 import {RouteHelper} from 'react-navigation-easy-helper';
 import Share from 'react-native-share';
 import ProgressBar from './components/ProgressBar';
+import {showActionSheet} from '../../utils/dialog';
+import Icon from '../../components/Icon';
 
 type Props = {
   url?: string,
@@ -84,7 +86,6 @@ class WebPage extends Component<Props> {
 
   onNavigationStateChange = navState => {
     console.log('onNavigationStateChange', navState);
-    this._injectVConsole();
     let title = this.state.title;
     if (navState.title && navState.title !== 'about:blank') {
       title = navState.title;
@@ -93,9 +94,7 @@ class WebPage extends Component<Props> {
   };
 
   _injectVConsole() {
-    if (this.props.isDevelopment) {
-      this.callJs(this._injectedVConsoleCode());
-    }
+    this.callJs(this._injectedVConsoleCode());
   }
 
   /**
@@ -170,25 +169,48 @@ class WebPage extends Component<Props> {
   render() {
     return (
       <BaseContainer
-        leftPress={() => {
-          if (!this.onBackPressed()) {
-            RouteHelper.goBack();
-          }
+        leftView={
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              onPress={() => {
+                if (!this.onBackPressed()) {
+                  RouteHelper.goBack();
+                }
+              }}>
+              <Icon icon={'left'} size={px2dp(40)} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                RouteHelper.goBack();
+              }}
+              style={{marginLeft: px2dp(30)}}>
+              <Icon icon={'close'} size={px2dp(40)} />
+            </TouchableOpacity>
+          </View>
+        }
+        rightIcon={'MaterialIcons/more-horiz'}
+        rightPress={() => {
+          let options = ['刷新', '调试', '分享', i18n('Base.Cancel')];
+          showActionSheet({
+            options: options,
+            cancelButtonIndex: options.length - 1,
+            onPress: index => {
+              switch (index) {
+                case 0:
+                  this.webView.reload();
+                  break;
+                case 1:
+                  this._injectVConsole();
+                  break;
+                case 2:
+                  Share.open({url: this.props.url});
+                  break;
+                default:
+                  break;
+              }
+            },
+          });
         }}
-        rightMenu={[
-          {
-            icon: 'Ionicons/ios-refresh',
-            onPress: () => {
-              this.webView.reload();
-            },
-          },
-          {
-            icon: 'Feather/share',
-            onPress: () => {
-              Share.open({url: this.props.url});
-            },
-          },
-        ]}
         title={this.state.title}>
         <WebView
           originWhitelist={['*']}

@@ -27,6 +27,12 @@ type ActionSheetParams = {
 };
 
 export function showActionSheet(params: ActionSheetParams) {
+  if (!params.title) {
+    params.title = undefined;
+  }
+  if (!params.message) {
+    params.message = undefined;
+  }
   actionSheetRef && actionSheetRef.show(params);
 }
 export function setNoticeRef(ref) {

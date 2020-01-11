@@ -5,38 +5,11 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-import AddressText from './AddressText';
-import {formatBalance} from '../utils/format';
 import {baseStyles, theme} from '../config/theme';
-import {mapInputType} from '../utils/convert';
-import {useApi} from '../hooks';
-import {
-  TYPE_ADDRESS,
-  TYPE_ADDRESS_WITHACCOUNT,
-  TYPE_ADDRESS_WITHBOOK,
-  TYPE_BALANCE,
-  TYPE_BOOL,
-} from './Forms';
+import {useFormatValue} from '../hooks';
 
 function Param({type, value, style}) {
-  const {api} = useApi();
-  const _type = mapInputType(api, type);
-  let valueEl;
-  switch (_type) {
-    case TYPE_BALANCE:
-      valueEl = formatBalance(value, false);
-      break;
-    case TYPE_ADDRESS:
-    case TYPE_ADDRESS_WITHACCOUNT:
-    case TYPE_ADDRESS_WITHBOOK:
-      valueEl = <AddressText address={value} />;
-      break;
-    case TYPE_BOOL:
-      valueEl = value ? 'Yes' : 'No';
-      break;
-    default:
-      valueEl = `${value}`;
-  }
+  const valueEl = useFormatValue(value, type);
   return (
     <View style={[baseStyles.paramsItem, style]}>
       <Text style={{color: theme.content}}>{`${type}`}</Text>

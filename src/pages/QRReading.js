@@ -5,7 +5,7 @@ import BaseContainer from '../components/BaseContainer';
 import {checkPermission} from '../utils/PromiseUtils';
 import {showAlert} from '../utils/dialog';
 
-class QRReading extends Component {
+export default class QRReading extends Component {
   componentDidMount() {
     this.timeout = setTimeout(() => {
       this._barCode && this._barCode.startScan();
@@ -70,5 +70,3 @@ class QRReading extends Component {
     navigation.goBack();
   };
 }
-
-export default QRReading;

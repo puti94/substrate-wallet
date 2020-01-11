@@ -14,6 +14,7 @@ export {default as useSignTx} from './useSignTx';
 export {default as useCacheKey} from './useCacheKey';
 export {default as useIsMountedRef} from './useIsMountedRef';
 export {default as useRequest} from './useRequest';
+export {default as useFormatValue} from './useFormatValue';
 
 export function useApi() {
   return useContext(ApiContext);

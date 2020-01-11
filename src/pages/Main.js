@@ -10,8 +10,9 @@ import {theme} from '../config/theme';
 import Home from './home';
 import {Settings} from './set';
 import Modules from './modules';
+import Find from './find';
 
-function Main() {
+export default function Main() {
   return (
     <BaseContainer navBar={null}>
       <TabView
@@ -44,6 +45,14 @@ function Main() {
           <Modules />
         </TabView.Sheet>
         <TabView.Sheet
+          title={i18n('Main.Find')}
+          icon={<Icon icon={'find'} size={px2dp(40)} />}
+          activeIcon={
+            <Icon icon={'find'} size={px2dp(40)} color={theme.baseColor} />
+          }>
+          <Find />
+        </TabView.Sheet>
+        <TabView.Sheet
           title={i18n('Main.Set')}
           icon={<Icon icon={'setting'} size={px2dp(40)} />}
           activeIcon={
@@ -55,5 +64,3 @@ function Main() {
     </BaseContainer>
   );
 }
-
-export default Main;

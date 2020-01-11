@@ -5,7 +5,7 @@
 
 import {Text, View, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
-import {useApi, useCall} from '../hooks';
+import {useApi, useCall, useFormatValue} from '../hooks';
 
 export default function WithCallResult({
   module,
@@ -36,13 +36,8 @@ export default function WithCallResult({
 function Result({module, call, arg = [], section = 'rpc', isOpen}) {
   const {api} = useApi();
   const result = useCall(api[section][module][call], arg, {isSingle: false});
-  return (
-    <>
-      {!!(!!result && isOpen) && (
-        <Text selectable>{JSON.stringify(result, null, 4)}</Text>
-      )}
-    </>
-  );
+  const _result = useFormatValue(result, result && result.toRawType());
+  return <>{!!(!!result && isOpen) && <Text selectable>{_result}</Text>}</>;
 }
 
 const styles = StyleSheet.create({

@@ -19,6 +19,7 @@ import {RouteHelper} from 'react-navigation-easy-helper';
 import keyring from '@polkadot/ui-keyring';
 import {showAlert, showLoading} from '../../utils/dialog';
 import {useStoreActions} from 'easy-peasy';
+import {seedValidate} from '../../utils/defaults';
 
 function CreateView() {
   const form = useForm({
@@ -60,6 +61,7 @@ function CreateView() {
 }
 
 function ImportView() {
+  const [type, setType] = useState('keystore');
   const typeItem = {
     label: '类型',
     prop: 'type',
@@ -67,6 +69,7 @@ function ImportView() {
     items: [
       {label: 'Keystore', value: 'keystore'},
       {label: '助记词', value: 'mnemonic'},
+      {label: '种子', value: 'seed'},
     ],
     required: true,
   };
@@ -94,13 +97,13 @@ function ImportView() {
     required: true,
   };
   const mnemonicItem = {
-    label: '助记词',
+    label: type === 'seed' ? '种子' : '助记词',
     prop: 'mnemonic',
     type: TYPE_AREA,
     validate: [
       {
-        verify: isMnemonic,
-        message: '助记词长度正确',
+        verify: type === 'seed' ? seedValidate : isMnemonic,
+        message: type === 'seed' ? 'seed不正确' : '助记词长度正确',
       },
     ],
     required: true,
@@ -110,7 +113,7 @@ function ImportView() {
     prop: 'name',
     required: true,
   };
-  const [isKeystoreType, setKeystoreType] = useState(true);
+
   const setSelectedAccount = useStoreActions(
     actions => actions.accounts.setSelectedAccount,
   );
@@ -119,8 +122,8 @@ function ImportView() {
     fields: buildFields(
       [
         typeItem,
-        isKeystoreType ? keystoreItem : mnemonicItem,
-        isKeystoreType ? null : nameItem,
+        type === 'keystore' ? keystoreItem : mnemonicItem,
+        type === 'keystore' ? null : nameItem,
         passwordItem,
       ].filter(t => t),
     ),
@@ -135,7 +138,7 @@ function ImportView() {
           console.log('错误', e);
           showAlert('密码不正确');
         }
-      } else if (type === 'mnemonic') {
+      } else if (type === 'mnemonic' || type === 'seed') {
         let hide = showLoading('导入中');
         const result = await new Promise(resolve => {
           setTimeout(
@@ -161,7 +164,7 @@ function ImportView() {
   });
   useEffect(() => {
     console.log('值', form.values.type);
-    setKeystoreType(form.values.type === 'keystore');
+    setType(form.values.type);
   }, [form.values.type]);
   return <BaseForm {...form} />;
 }

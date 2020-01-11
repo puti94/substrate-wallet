@@ -45,7 +45,7 @@ export default class ProgressBar extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: px2dp(6),
+    height: px2dp(4),
     opacity: 0.7,
     width: '100%',
     position: 'absolute',

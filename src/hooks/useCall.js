@@ -103,12 +103,15 @@ export default function useCall(fn, params = [], options = {}) {
   useEffect((): void => {
     // check if we have a function & that we are mounted
     if (mounted.current && fn) {
+      if (typeof fn !== 'function') {
+        setValue((options.transform || transformIdentity)(fn));
+        return;
+      }
       const [serialized, mappedParams] = extractParams(
         fn,
         params,
         options.paramMap || transformIdentity,
       );
-
       if (mappedParams && serialized !== tracker.current.serialized) {
         tracker.current.serialized = serialized;
 
